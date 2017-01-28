@@ -2,6 +2,7 @@ group 'com.kamatama41'
 version '1.0-SNAPSHOT'
 
 apply plugin: 'java'
+apply plugin: 'maven'
 
 sourceCompatibility = 1.7
 targetCompatibility = 1.7
@@ -11,8 +12,19 @@ repositories {
     jcenter()
 }
 
+def repo = new File(rootDir, "repository")
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository url: "file://${repo.absolutePath}"
+            pom.version = version
+            pom.groupId = group
+            pom.artifactId = rootProject.name
+        }
+    }
+}
+
 dependencies {
     compile "org.embulk:embulk-standards:0.8.16"
     compile "org.embulk:embulk-test:0.8.16"
-    testCompile group: 'junit', name: 'junit', version: '4.12'
 }
