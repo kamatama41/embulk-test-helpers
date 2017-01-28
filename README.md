@@ -9,6 +9,6 @@ repositories {
 }
 
 dependencies {
-    testCompile 'com.kamatama41:embulk-test-helpers:1.0.1'
+    testCompile 'com.kamatama41:embulk-test-helpers:0.1.0'
 }
 ```
