@@ -1,0 +1,9 @@
+machine:
+  java:
+    version: oraclejdk7
+
+deployment:
+  release:
+    branch: master
+    commands:
+      - ./release.sh
