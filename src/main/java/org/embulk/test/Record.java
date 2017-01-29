@@ -1,6 +1,5 @@
 package org.embulk.test;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -9,18 +8,6 @@ public class Record {
 
     Record(List<Object> values) {
         this.values = values;
-    }
-
-    public static Record record(Object... values) {
-        List<Object> converted = new ArrayList<>(values.length);
-        for (Object value : values) {
-            if (value instanceof Integer) {
-                converted.add(((Integer) value).longValue());
-            } else {
-                converted.add(value);
-            }
-        }
-        return new Record(converted);
     }
 
     @Override

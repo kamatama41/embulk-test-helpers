@@ -4,14 +4,18 @@ import org.embulk.EmbulkEmbed;
 import org.embulk.config.ConfigDiff;
 import org.embulk.config.ConfigSource;
 import org.embulk.exec.ResumeState;
+import org.embulk.spi.InputPlugin;
 import org.embulk.spi.OutputPlugin;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MyTestingEmbulk extends TestingEmbulk {
 
     public static class Builder extends TestingEmbulk.Builder {
         public TestingEmbulk build() {
+            this.registerPlugin(InputPlugin.class, "test", TestInputPlugin.class);
             this.registerPlugin(OutputPlugin.class, "test", TestOutputPlugin.class);
             return new MyTestingEmbulk(this);
         }
@@ -55,6 +59,16 @@ public class MyTestingEmbulk extends TestingEmbulk {
                 .resume();
     }
 
+    public RunResult runFilter(ConfigSource filterConfig, String inConfigPath) {
+        return new RunConfig()
+                .inConfig(MyEmbulkTests.configFromResource(inConfigPath))
+                .filterConfig(filterConfig)
+                .execConfig(newConfig().set("min_output_tasks", 1))
+                .outConfig(newConfig().set("type", "test"))
+                .run();
+    }
+
+
     @SuppressWarnings("unchecked")
     private <T> T extractSuperField(String fieldName) {
         try {
@@ -68,6 +82,7 @@ public class MyTestingEmbulk extends TestingEmbulk {
 
     private class RunConfig {
         private ConfigSource inConfig;
+        private List<ConfigSource> filterConfigs = new ArrayList<>();
         private ConfigSource execConfig;
         private ConfigSource outConfig;
         private ConfigDiff configDiff;
@@ -77,6 +92,11 @@ public class MyTestingEmbulk extends TestingEmbulk {
 
         RunConfig inConfig(ConfigSource inConfig) {
             this.inConfig = inConfig;
+            return this;
+        }
+
+        RunConfig filterConfig(ConfigSource filterConfig) {
+            this.filterConfigs.add(filterConfig);
             return this;
         }
 
@@ -102,6 +122,7 @@ public class MyTestingEmbulk extends TestingEmbulk {
 
         RunResult run() {
             ConfigSource config = newConfig()
+                    .set("filters", filterConfigs)
                     .set("exec", execConfig)
                     .set("in", inConfig)
                     .set("out", outConfig);
@@ -115,6 +136,7 @@ public class MyTestingEmbulk extends TestingEmbulk {
 
         EmbulkEmbed.ResumableResult resume() {
             ConfigSource config = newConfig()
+                    .set("filters", filterConfigs)
                     .set("exec", execConfig)
                     .set("in", inConfig)
                     .set("out", outConfig);

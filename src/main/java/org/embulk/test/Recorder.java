@@ -40,10 +40,6 @@ class Recorder {
         this.records.add(new Record(values.build()));
     }
 
-    Schema getSchema() {
-        return schema;
-    }
-
     synchronized void setSchema(Schema schema) {
         this.schema = schema;
     }
@@ -63,5 +59,13 @@ class Recorder {
         Collections.addAll(expected, records);
 
         assertThat(actual, is(expected));
+    }
+
+    void assertSchema(Column... columns) {
+        Schema.Builder builder = Schema.builder();
+        for (Column column : columns) {
+            builder.add(column.getName(), column.getType());
+        }
+        assertThat(builder.build(), is(this.schema));
     }
 }

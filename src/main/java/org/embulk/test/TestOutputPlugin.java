@@ -5,6 +5,7 @@ import org.embulk.config.ConfigSource;
 import org.embulk.config.Task;
 import org.embulk.config.TaskReport;
 import org.embulk.config.TaskSource;
+import org.embulk.spi.Column;
 import org.embulk.spi.Exec;
 import org.embulk.spi.OutputPlugin;
 import org.embulk.spi.Page;
@@ -75,4 +76,9 @@ public class TestOutputPlugin implements OutputPlugin {
     public static void assertRecords(Record... records) {
         recorder.assertRecords(records);
     }
+
+    public static void assertSchema(Column... columns) {
+        recorder.assertSchema(columns);
+    }
+
 }

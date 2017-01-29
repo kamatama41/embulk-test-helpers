@@ -6,9 +6,9 @@ import org.embulk.test.MyTestingEmbulk;
 import org.junit.Rule;
 import org.junit.Test;
 
-import static org.embulk.test.DateUtil.timestamp;
+import static org.embulk.test.Utils.record;
+import static org.embulk.test.Utils.timestamp;
 import static org.embulk.test.TestOutputPlugin.assertRecords;
-import static org.embulk.test.Record.record;
 
 public class TestLocalFileInputPlugin {
     @Rule
@@ -17,7 +17,7 @@ public class TestLocalFileInputPlugin {
             .build();
 
     @Test
-    public void loadFile() throws Exception {
+    public void loadFile() {
         ConfigSource config = MyEmbulkTests.configFromResource("yaml/file_input.yml");
         embulk.runInput(config);
         assertRecords(
