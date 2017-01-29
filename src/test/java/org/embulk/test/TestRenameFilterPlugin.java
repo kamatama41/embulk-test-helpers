@@ -1,7 +1,6 @@
-package org.embulk.input;
+package org.embulk.test;
 
 import org.embulk.config.ConfigSource;
-import org.embulk.test.ExtendedTestingEmbulk;
 import org.junit.Rule;
 import org.junit.Test;
 
