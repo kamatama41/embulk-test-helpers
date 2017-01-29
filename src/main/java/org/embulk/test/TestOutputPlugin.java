@@ -14,7 +14,7 @@ import org.embulk.spi.TransactionalPageOutput;
 
 import java.util.List;
 
-public class MemoryOutputPlugin implements OutputPlugin {
+public class TestOutputPlugin implements OutputPlugin {
     private static final Recorder recorder = new Recorder();
 
     public interface PluginTask extends Task {

@@ -7,7 +7,7 @@ import org.junit.Rule;
 import org.junit.Test;
 
 import static org.embulk.test.DateUtil.timestamp;
-import static org.embulk.test.MemoryOutputPlugin.assertRecords;
+import static org.embulk.test.TestOutputPlugin.assertRecords;
 import static org.embulk.test.Record.record;
 
 public class TestLocalFileInputPlugin {

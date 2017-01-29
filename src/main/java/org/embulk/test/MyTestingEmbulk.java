@@ -12,7 +12,7 @@ public class MyTestingEmbulk extends TestingEmbulk {
 
     public static class Builder extends TestingEmbulk.Builder {
         public TestingEmbulk build() {
-            this.registerPlugin(OutputPlugin.class, "memory", MemoryOutputPlugin.class);
+            this.registerPlugin(OutputPlugin.class, "test", TestOutputPlugin.class);
             return new MyTestingEmbulk(this);
         }
     }
@@ -38,7 +38,7 @@ public class MyTestingEmbulk extends TestingEmbulk {
                 .inConfig(inConfig)
                 .configDiff(confDiff)
                 .execConfig(newConfig().set("min_output_tasks", 1))
-                .outConfig(newConfig().set("type", "memory"))
+                .outConfig(newConfig().set("type", "test"))
                 .run();
     }
 
@@ -51,7 +51,7 @@ public class MyTestingEmbulk extends TestingEmbulk {
                 .inConfig(inConfig)
                 .resumeState(resumeState)
                 .execConfig(newConfig().set("min_output_tasks", 1))
-                .outConfig(newConfig().set("type", "memory"))
+                .outConfig(newConfig().set("type", "test"))
                 .resume();
     }
 
