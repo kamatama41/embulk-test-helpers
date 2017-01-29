@@ -34,7 +34,6 @@ public class MyTestingEmbulk extends TestingEmbulk {
     }
 
     public RunResult runInput(ConfigSource inConfig, ConfigDiff confDiff) {
-        MemoryOutputPlugin.clearRecords();
         return new RunConfig()
                 .inConfig(inConfig)
                 .configDiff(confDiff)
@@ -48,7 +47,6 @@ public class MyTestingEmbulk extends TestingEmbulk {
     }
 
     public EmbulkEmbed.ResumableResult resume(ConfigSource inConfig, ResumeState resumeState) {
-        MemoryOutputPlugin.clearRecords();
         return new RunConfig()
                 .inConfig(inConfig)
                 .resumeState(resumeState)
