@@ -8,8 +8,8 @@ import static org.embulk.test.EmbulkTests.readResource;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assume.assumeThat;
 
-public class MyEmbulkTests {
-    private MyEmbulkTests() {
+public class ExtendedEmbulkTests {
+    private ExtendedEmbulkTests() {
     }
 
     public static ConfigSource configFromString(String yaml) {

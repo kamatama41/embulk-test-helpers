@@ -4,27 +4,31 @@ import org.embulk.EmbulkEmbed;
 import org.embulk.config.ConfigDiff;
 import org.embulk.config.ConfigSource;
 import org.embulk.exec.ResumeState;
+import org.embulk.spi.InputPlugin;
 import org.embulk.spi.OutputPlugin;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
 
-public class MyTestingEmbulk extends TestingEmbulk {
+public class ExtendedTestingEmbulk extends TestingEmbulk {
 
     public static class Builder extends TestingEmbulk.Builder {
         public TestingEmbulk build() {
-            this.registerPlugin(OutputPlugin.class, "memory", MemoryOutputPlugin.class);
-            return new MyTestingEmbulk(this);
+            this.registerPlugin(InputPlugin.class, "test", TestInputPlugin.class);
+            this.registerPlugin(OutputPlugin.class, "test", TestOutputPlugin.class);
+            return new ExtendedTestingEmbulk(this);
         }
     }
 
     public static TestingEmbulk.Builder builder()
     {
-        return new MyTestingEmbulk.Builder();
+        return new ExtendedTestingEmbulk.Builder();
     }
 
     private final EmbulkEmbed superEmbed;
 
-    MyTestingEmbulk(Builder builder) {
+    ExtendedTestingEmbulk(Builder builder) {
         super(builder);
         this.superEmbed = extractSuperField("embed");
     }
@@ -34,12 +38,11 @@ public class MyTestingEmbulk extends TestingEmbulk {
     }
 
     public RunResult runInput(ConfigSource inConfig, ConfigDiff confDiff) {
-        MemoryOutputPlugin.clearRecords();
         return new RunConfig()
                 .inConfig(inConfig)
                 .configDiff(confDiff)
                 .execConfig(newConfig().set("min_output_tasks", 1))
-                .outConfig(newConfig().set("type", "memory"))
+                .outConfig(newConfig().set("type", "test"))
                 .run();
     }
 
@@ -48,14 +51,23 @@ public class MyTestingEmbulk extends TestingEmbulk {
     }
 
     public EmbulkEmbed.ResumableResult resume(ConfigSource inConfig, ResumeState resumeState) {
-        MemoryOutputPlugin.clearRecords();
         return new RunConfig()
                 .inConfig(inConfig)
                 .resumeState(resumeState)
                 .execConfig(newConfig().set("min_output_tasks", 1))
-                .outConfig(newConfig().set("type", "memory"))
+                .outConfig(newConfig().set("type", "test"))
                 .resume();
     }
+
+    public RunResult runFilter(ConfigSource filterConfig, String inConfigPath) {
+        return new RunConfig()
+                .inConfig(ExtendedEmbulkTests.configFromResource(inConfigPath))
+                .filterConfig(filterConfig)
+                .execConfig(newConfig().set("min_output_tasks", 1))
+                .outConfig(newConfig().set("type", "test"))
+                .run();
+    }
+
 
     @SuppressWarnings("unchecked")
     private <T> T extractSuperField(String fieldName) {
@@ -70,6 +82,7 @@ public class MyTestingEmbulk extends TestingEmbulk {
 
     private class RunConfig {
         private ConfigSource inConfig;
+        private List<ConfigSource> filterConfigs = new ArrayList<>();
         private ConfigSource execConfig;
         private ConfigSource outConfig;
         private ConfigDiff configDiff;
@@ -79,6 +92,11 @@ public class MyTestingEmbulk extends TestingEmbulk {
 
         RunConfig inConfig(ConfigSource inConfig) {
             this.inConfig = inConfig;
+            return this;
+        }
+
+        RunConfig filterConfig(ConfigSource filterConfig) {
+            this.filterConfigs.add(filterConfig);
             return this;
         }
 
@@ -104,6 +122,7 @@ public class MyTestingEmbulk extends TestingEmbulk {
 
         RunResult run() {
             ConfigSource config = newConfig()
+                    .set("filters", filterConfigs)
                     .set("exec", execConfig)
                     .set("in", inConfig)
                     .set("out", outConfig);
@@ -117,6 +136,7 @@ public class MyTestingEmbulk extends TestingEmbulk {
 
         EmbulkEmbed.ResumableResult resume() {
             ConfigSource config = newConfig()
+                    .set("filters", filterConfigs)
                     .set("exec", execConfig)
                     .set("in", inConfig)
                     .set("out", outConfig);
