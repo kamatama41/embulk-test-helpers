@@ -11,24 +11,24 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MyTestingEmbulk extends TestingEmbulk {
+public class ExtendedTestingEmbulk extends TestingEmbulk {
 
     public static class Builder extends TestingEmbulk.Builder {
         public TestingEmbulk build() {
             this.registerPlugin(InputPlugin.class, "test", TestInputPlugin.class);
             this.registerPlugin(OutputPlugin.class, "test", TestOutputPlugin.class);
-            return new MyTestingEmbulk(this);
+            return new ExtendedTestingEmbulk(this);
         }
     }
 
     public static TestingEmbulk.Builder builder()
     {
-        return new MyTestingEmbulk.Builder();
+        return new ExtendedTestingEmbulk.Builder();
     }
 
     private final EmbulkEmbed superEmbed;
 
-    MyTestingEmbulk(Builder builder) {
+    ExtendedTestingEmbulk(Builder builder) {
         super(builder);
         this.superEmbed = extractSuperField("embed");
     }
@@ -61,7 +61,7 @@ public class MyTestingEmbulk extends TestingEmbulk {
 
     public RunResult runFilter(ConfigSource filterConfig, String inConfigPath) {
         return new RunConfig()
-                .inConfig(MyEmbulkTests.configFromResource(inConfigPath))
+                .inConfig(ExtendedEmbulkTests.configFromResource(inConfigPath))
                 .filterConfig(filterConfig)
                 .execConfig(newConfig().set("min_output_tasks", 1))
                 .outConfig(newConfig().set("type", "test"))

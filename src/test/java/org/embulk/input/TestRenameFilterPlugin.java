@@ -1,7 +1,7 @@
 package org.embulk.input;
 
 import org.embulk.config.ConfigSource;
-import org.embulk.test.MyTestingEmbulk;
+import org.embulk.test.ExtendedTestingEmbulk;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -14,7 +14,7 @@ import static org.embulk.test.Utils.record;
 
 public class TestRenameFilterPlugin {
     @Rule
-    public MyTestingEmbulk embulk = (MyTestingEmbulk) MyTestingEmbulk
+    public ExtendedTestingEmbulk embulk = (ExtendedTestingEmbulk) ExtendedTestingEmbulk
             .builder()
             .build();
 

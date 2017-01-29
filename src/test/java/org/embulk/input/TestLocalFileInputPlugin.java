@@ -1,8 +1,8 @@
 package org.embulk.input;
 
 import org.embulk.config.ConfigSource;
-import org.embulk.test.MyEmbulkTests;
-import org.embulk.test.MyTestingEmbulk;
+import org.embulk.test.ExtendedEmbulkTests;
+import org.embulk.test.ExtendedTestingEmbulk;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -12,13 +12,13 @@ import static org.embulk.test.TestOutputPlugin.assertRecords;
 
 public class TestLocalFileInputPlugin {
     @Rule
-    public MyTestingEmbulk embulk = (MyTestingEmbulk) MyTestingEmbulk
+    public ExtendedTestingEmbulk embulk = (ExtendedTestingEmbulk) ExtendedTestingEmbulk
             .builder()
             .build();
 
     @Test
     public void loadFile() {
-        ConfigSource config = MyEmbulkTests.configFromResource("yaml/file_input.yml");
+        ConfigSource config = ExtendedEmbulkTests.configFromResource("yaml/file_input.yml");
         embulk.runInput(config);
         assertRecords(
                 record(1, 32864, timestamp(2015, 1, 27, 19, 23, 49), timestamp(2015, 1, 27), "embulk"),
