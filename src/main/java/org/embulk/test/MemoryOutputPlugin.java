@@ -32,6 +32,7 @@ public class MemoryOutputPlugin implements OutputPlugin {
     public ConfigDiff resume(TaskSource taskSource,
                              Schema schema, int taskCount,
                              Control control) {
+        recorder.clear();
         control.run(taskSource);
         return Exec.newConfigDiff();
     }
@@ -44,7 +45,6 @@ public class MemoryOutputPlugin implements OutputPlugin {
 
     @Override
     public TransactionalPageOutput open(final TaskSource taskSource, final Schema schema, final int taskIndex) {
-        recorder.clear();
         recorder.setSchema(schema);
         return new TransactionalPageOutput() {
             private final PageReader reader = new PageReader(schema);

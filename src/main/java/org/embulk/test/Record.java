@@ -1,6 +1,6 @@
 package org.embulk.test;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -12,11 +12,15 @@ public class Record {
     }
 
     public static Record record(Object... values) {
-        return new Record(Arrays.asList(values));
-    }
-
-    List<Object> getValues() {
-        return values;
+        List<Object> converted = new ArrayList<>(values.length);
+        for (Object value : values) {
+            if (value instanceof Integer) {
+                converted.add(((Integer) value).longValue());
+            } else {
+                converted.add(value);
+            }
+        }
+        return new Record(converted);
     }
 
     @Override
@@ -30,5 +34,10 @@ public class Record {
     @Override
     public int hashCode() {
         return Objects.hash(values);
+    }
+
+    @Override
+    public String toString() {
+        return values.toString();
     }
 }
