@@ -9,9 +9,9 @@ repositories {
 }
 
 dependencies {
-    testCompile 'com.kamatama41:embulk-test-helpers:0.1.1'
+    testCompile 'com.kamatama41:embulk-test-helpers:0.1.2'
 }
 ```
 
 ## Usage
-Please refer to [sample test cases](https://github.com/kamatama41/embulk-test-helpers/tree/master/src/test/java/org/embulk/test)
+Please refer to [sample test cases](https://github.com/kamatama41/embulk-test-helpers/tree/master/src/test/java/com/kamatama41/embulk/test)
