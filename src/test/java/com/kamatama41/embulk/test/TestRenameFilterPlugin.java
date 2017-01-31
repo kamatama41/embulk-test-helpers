@@ -15,7 +15,7 @@ public class TestRenameFilterPlugin extends EmbulkPluginTest {
 
     @Test
     public void renameColumn() {
-        // Define input data
+        // Specify input data
         final String inConfigPath = "yaml/filter_input.yml";
 
         // Construct filter-config
