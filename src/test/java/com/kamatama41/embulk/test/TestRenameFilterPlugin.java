@@ -15,19 +15,26 @@ public class TestRenameFilterPlugin extends EmbulkPluginTest {
 
     @Test
     public void renameColumn() {
+        // Define input data
         final String inConfigPath = "yaml/filter_input.yml";
 
+        // Construct filter-config
         ConfigSource config = newConfig()
                 .set("type", "rename")
                 .set("columns", newConfig()
                         .set("age", "renamed_age")
                 );
+
+        // Run Embulk
         runFilter(config, inConfigPath);
 
+        // Check schema definition
         assertSchema(
                 column("username", STRING),
                 column("renamed_age", LONG)
         );
+
+        // Check read records
         assertRecords(
                 record("user1", 20),
                 record("user2", 21)
