@@ -1,7 +1,8 @@
-package org.embulk.test;
+package com.kamatama41.embulk.test;
 
 import org.embulk.config.ConfigSource;
-import org.junit.Rule;
+import org.embulk.test.EmbulkPluginTest;
+import org.embulk.test.ExtendedEmbulkTests;
 import org.junit.Test;
 
 import static org.embulk.test.Utils.record;
