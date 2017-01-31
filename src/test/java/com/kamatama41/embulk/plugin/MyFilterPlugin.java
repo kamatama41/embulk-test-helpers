@@ -19,7 +19,7 @@ import org.msgpack.value.Value;
 
 public class MyFilterPlugin implements FilterPlugin {
 
-    public interface PluginTask extends Task {
+    interface PluginTask extends Task {
     }
 
     @Override
