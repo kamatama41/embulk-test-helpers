@@ -8,16 +8,12 @@ import static org.embulk.test.Utils.record;
 import static org.embulk.test.Utils.timestamp;
 import static org.embulk.test.TestOutputPlugin.assertRecords;
 
-public class TestLocalFileInputPlugin {
-    @Rule
-    public ExtendedTestingEmbulk embulk = (ExtendedTestingEmbulk) ExtendedTestingEmbulk
-            .builder()
-            .build();
+public class TestLocalFileInputPlugin extends EmbulkPluginTest {
 
     @Test
     public void loadFile() {
         ConfigSource config = ExtendedEmbulkTests.configFromResource("yaml/file_input.yml");
-        embulk.runInput(config);
+        runInput(config);
         assertRecords(
                 record(1, 32864, timestamp(2015, 1, 27, 19, 23, 49), timestamp(2015, 1, 27), "embulk"),
                 record(2, 14824, timestamp(2015, 1, 27, 19, 1, 23), timestamp(2015, 1, 27), "embulk jruby"),
