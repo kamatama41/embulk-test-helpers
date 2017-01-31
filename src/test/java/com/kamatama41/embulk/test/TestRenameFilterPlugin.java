@@ -1,8 +1,7 @@
-package org.embulk.input;
+package com.kamatama41.embulk.test;
 
 import org.embulk.config.ConfigSource;
-import org.embulk.test.ExtendedTestingEmbulk;
-import org.junit.Rule;
+import org.embulk.test.EmbulkPluginTest;
 import org.junit.Test;
 
 import static org.embulk.test.TestOutputPlugin.assertRecords;
@@ -12,27 +11,30 @@ import static org.embulk.spi.type.Types.*;
 import static org.embulk.test.Utils.json;
 import static org.embulk.test.Utils.record;
 
-public class TestRenameFilterPlugin {
-    @Rule
-    public ExtendedTestingEmbulk embulk = (ExtendedTestingEmbulk) ExtendedTestingEmbulk
-            .builder()
-            .build();
+public class TestRenameFilterPlugin extends EmbulkPluginTest {
 
     @Test
     public void renameColumn() {
+        // Specify input data
         final String inConfigPath = "yaml/filter_input.yml";
 
-        ConfigSource config = embulk.newConfig()
+        // Construct filter-config
+        ConfigSource config = newConfig()
                 .set("type", "rename")
-                .set("columns", embulk.newConfig()
+                .set("columns", newConfig()
                         .set("age", "renamed_age")
                 );
-        embulk.runFilter(config, inConfigPath);
 
+        // Run Embulk
+        runFilter(config, inConfigPath);
+
+        // Check schema definition
         assertSchema(
                 column("username", STRING),
                 column("renamed_age", LONG)
         );
+
+        // Check read records
         assertRecords(
                 record("user1", 20),
                 record("user2", 21)
@@ -43,12 +45,13 @@ public class TestRenameFilterPlugin {
     public void renameJsonColumn() {
         final String inConfigPath = "yaml/filter_json_input.yml";
 
-        ConfigSource config = embulk.newConfig()
+        ConfigSource config = newConfig()
                 .set("type", "rename")
-                .set("columns", embulk.newConfig()
+                .set("columns", newConfig()
                         .set("record", "user_info")
                 );
-        embulk.runFilter(config, inConfigPath);
+
+        runFilter(config, inConfigPath);
 
         assertSchema(
                 column("user_info", JSON)

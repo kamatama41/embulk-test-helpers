@@ -33,42 +33,6 @@ public class ExtendedTestingEmbulk extends TestingEmbulk {
         this.superEmbed = extractSuperField("embed");
     }
 
-    public RunResult runInput(ConfigSource inConfig) {
-        return runInput(inConfig, (ConfigDiff) null);
-    }
-
-    public RunResult runInput(ConfigSource inConfig, ConfigDiff confDiff) {
-        return new RunConfig()
-                .inConfig(inConfig)
-                .configDiff(confDiff)
-                .execConfig(newConfig().set("min_output_tasks", 1))
-                .outConfig(newConfig().set("type", "test"))
-                .run();
-    }
-
-    public EmbulkEmbed.ResumableResult resume(ConfigSource inConfig) {
-        return resume(inConfig, null);
-    }
-
-    public EmbulkEmbed.ResumableResult resume(ConfigSource inConfig, ResumeState resumeState) {
-        return new RunConfig()
-                .inConfig(inConfig)
-                .resumeState(resumeState)
-                .execConfig(newConfig().set("min_output_tasks", 1))
-                .outConfig(newConfig().set("type", "test"))
-                .resume();
-    }
-
-    public RunResult runFilter(ConfigSource filterConfig, String inConfigPath) {
-        return new RunConfig()
-                .inConfig(ExtendedEmbulkTests.configFromResource(inConfigPath))
-                .filterConfig(filterConfig)
-                .execConfig(newConfig().set("min_output_tasks", 1))
-                .outConfig(newConfig().set("type", "test"))
-                .run();
-    }
-
-
     @SuppressWarnings("unchecked")
     private <T> T extractSuperField(String fieldName) {
         try {
@@ -80,7 +44,7 @@ public class ExtendedTestingEmbulk extends TestingEmbulk {
         }
     }
 
-    private class RunConfig {
+    class RunConfig {
         private ConfigSource inConfig;
         private List<ConfigSource> filterConfigs = new ArrayList<>();
         private ConfigSource execConfig;
@@ -88,7 +52,7 @@ public class ExtendedTestingEmbulk extends TestingEmbulk {
         private ConfigDiff configDiff;
         private ResumeState resumeState;
 
-        private RunConfig() {}
+        RunConfig() {}
 
         RunConfig inConfig(ConfigSource inConfig) {
             this.inConfig = inConfig;
