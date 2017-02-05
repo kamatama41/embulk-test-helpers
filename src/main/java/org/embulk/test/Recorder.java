@@ -25,19 +25,19 @@ class Recorder {
     Recorder() {
     }
 
-    List<Record> getRecords() {
+    private List<Record> getRecords() {
         return new ArrayList<>(this.records);
     }
 
     synchronized void addRecord(PageReader reader) {
-        final ImmutableList.Builder<Object> values = ImmutableList.builder();
+        final List<Object> values = new ArrayList<>();
         reader.getSchema().visitColumns(new Pages.ObjectColumnVisitor(reader) {
             @Override
             public void visit(Column column, Object value) {
                 values.add(value);
             }
         });
-        this.records.add(new Record(values.build()));
+        this.records.add(new Record(values));
     }
 
     synchronized void setSchema(Schema schema) {
