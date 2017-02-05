@@ -25,7 +25,7 @@ class Recorder {
     Recorder() {
     }
 
-    List<Record> getRecords() {
+    private List<Record> getRecords() {
         return new ArrayList<>(this.records);
     }
 
