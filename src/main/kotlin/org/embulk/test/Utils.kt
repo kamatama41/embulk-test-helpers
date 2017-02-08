@@ -8,8 +8,6 @@ import org.joda.time.DateTime
 import org.joda.time.DateTimeZone
 import org.msgpack.value.Value
 
-import java.util.ArrayList
-
 object Utils {
     private val jsonParser = JsonParser()
 
@@ -23,15 +21,8 @@ object Utils {
 
     @JvmStatic
     fun record(vararg values: Any): Record {
-        val converted = ArrayList<Any>(values.size)
-        for (value in values) {
-            if (value is Int) {
-                converted.add(value.toLong())
-            } else {
-                converted.add(value)
-            }
-        }
-        return Record(converted)
+        // Convert Int to Long since Embulk supports only Long
+        return Record(values.map { (it as? Int)?.toLong() ?: it })
     }
 
     @JvmStatic
