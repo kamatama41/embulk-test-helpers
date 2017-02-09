@@ -41,3 +41,5 @@ fun configFromString(yaml: String): ConfigSource {
 fun configFromResource(name: String): ConfigSource {
     return configFromString(EmbulkTests.readResource(name))
 }
+
+data class Record internal constructor(private val values: List<Any>)
