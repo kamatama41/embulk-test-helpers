@@ -6,6 +6,8 @@ import org.embulk.config.ConfigSource;
 import org.embulk.exec.ResumeState;
 import org.junit.Before;
 
+import static org.embulk.test.Utils.configFromResource;
+
 public abstract class EmbulkPluginTest {
     private ExtendedTestingEmbulk embulk;
 
@@ -48,7 +50,7 @@ public abstract class EmbulkPluginTest {
 
     protected TestingEmbulk.RunResult runFilter(ConfigSource filterConfig, String inConfigPath) {
         return embulk.new RunConfig()
-                .inConfig(ExtendedEmbulkTests.configFromResource(inConfigPath))
+                .inConfig(configFromResource(inConfigPath))
                 .filterConfig(filterConfig)
                 .execConfig(newConfig().set("min_output_tasks", 1))
                 .outConfig(newConfig().set("type", "test"))

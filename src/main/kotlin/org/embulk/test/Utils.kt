@@ -1,5 +1,7 @@
 package org.embulk.test
 
+import org.embulk.EmbulkEmbed
+import org.embulk.config.ConfigSource
 import org.embulk.spi.Column
 import org.embulk.spi.json.JsonParser
 import org.embulk.spi.time.Timestamp
@@ -33,5 +35,15 @@ object Utils {
     @JvmStatic
     fun json(json: String): Value {
         return jsonParser.parse(json)
+    }
+
+    @JvmStatic
+    fun configFromString(yaml: String): ConfigSource {
+        return EmbulkEmbed.newSystemConfigLoader().fromYamlString(yaml)
+    }
+
+    @JvmStatic
+    fun configFromResource(name: String): ConfigSource {
+        return configFromString(EmbulkTests.readResource(name))
     }
 }
