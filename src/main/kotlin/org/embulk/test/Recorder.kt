@@ -35,7 +35,7 @@ internal class Recorder {
     }
 
     fun assertRecords(vararg records: Record) {
-        assertThat<Set<Record>>(this.records.toHashSet(), `is`(records.toHashSet()))
+        assertThat(this.records.toHashSet(), `is`(records.toHashSet()))
     }
 
     fun assertSchema(vararg columns: Column) {
