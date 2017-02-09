@@ -39,8 +39,7 @@ internal class Recorder {
     }
 
     fun assertSchema(vararg columns: Column) {
-        val builder = Schema.builder()
-        columns.forEach { builder.add(it.name, it.type) }
+        val builder = columns.fold(Schema.builder()) { builder, column -> builder.add(column.name, column.type) }
         assertThat(builder.build(), `is`(this.schema))
     }
 }
