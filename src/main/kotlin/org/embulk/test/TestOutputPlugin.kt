@@ -12,6 +12,7 @@ import org.embulk.spi.Page
 import org.embulk.spi.PageReader
 import org.embulk.spi.Schema
 import org.embulk.spi.TransactionalPageOutput
+import org.embulk.spi.type.Type
 
 
 class TestOutputPlugin : OutputPlugin {
@@ -64,7 +65,7 @@ class TestOutputPlugin : OutputPlugin {
         }
     }
 
-    companion object {
+    companion object Matcher {
         private val recorder = Recorder()
 
         @JvmStatic
@@ -75,6 +76,12 @@ class TestOutputPlugin : OutputPlugin {
         @JvmStatic
         fun assertSchema(vararg columns: Column) {
             recorder.assertSchema(*columns)
+        }
+
+        @JvmStatic
+        fun assertSchema(vararg nameAndType: Pair<String, Type>) {
+            val cols = nameAndType.map { Column(-1, it.first, it.second) }
+            recorder.assertSchema(*cols.toTypedArray())
         }
     }
 

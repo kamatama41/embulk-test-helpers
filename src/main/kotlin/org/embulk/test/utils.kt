@@ -2,6 +2,7 @@
 
 package org.embulk.test
 
+import com.fasterxml.jackson.databind.ObjectMapper
 import org.embulk.EmbulkEmbed
 import org.embulk.config.ConfigSource
 import org.embulk.spi.Column
@@ -13,6 +14,7 @@ import org.joda.time.DateTimeZone
 import org.msgpack.value.Value
 
 private val jsonParser = JsonParser()
+private val mapper = ObjectMapper()
 
 @JvmOverloads
 fun timestamp(year: Int, month: Int, date: Int, hour: Int = 0, minute: Int = 0, second: Int = 0): Timestamp {
@@ -32,6 +34,10 @@ fun column(name: String, type: Type): Column {
 
 fun json(json: String): Value {
     return jsonParser.parse(json)
+}
+
+fun json(vararg pairs: Pair<String, Any>): Value {
+    return json(mapper.writeValueAsString(mapOf(*pairs)))
 }
 
 fun configFromString(yaml: String): ConfigSource {
