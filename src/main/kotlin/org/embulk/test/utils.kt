@@ -23,29 +23,17 @@ fun timestamp(year: Int, month: Int, date: Int, hour: Int = 0, minute: Int = 0, 
     )
 }
 
-fun record(vararg values: Any): Record {
-    // Convert Int to Long since Embulk supports only Long
-    return Record(values.map { (it as? Int)?.toLong() ?: it })
-}
+// Convert Int to Long since Embulk supports only Long
+fun record(vararg values: Any): Record = Record(values.map { (it as? Int)?.toLong() ?: it })
 
-fun column(name: String, type: Type): Column {
-    return Column(-1, name, type)
-}
+fun column(name: String, type: Type): Column = Column(-1, name, type)
 
-fun json(json: String): Value {
-    return jsonParser.parse(json)
-}
+fun json(json: String): Value = jsonParser.parse(json)
 
-fun json(vararg pairs: Pair<String, Any>): Value {
-    return json(mapper.writeValueAsString(mapOf(*pairs)))
-}
+fun json(vararg pairs: Pair<String, Any>): Value = json(mapper.writeValueAsString(mapOf(*pairs)))
 
-fun configFromString(yaml: String): ConfigSource {
-    return EmbulkEmbed.newSystemConfigLoader().fromYamlString(yaml)
-}
+fun configFromString(yaml: String): ConfigSource = EmbulkEmbed.newSystemConfigLoader().fromYamlString(yaml)
 
-fun configFromResource(name: String): ConfigSource {
-    return configFromString(EmbulkTests.readResource(name))
-}
+fun configFromResource(name: String): ConfigSource = configFromString(EmbulkTests.readResource(name))
 
 data class Record internal constructor(private val values: List<Any>)
