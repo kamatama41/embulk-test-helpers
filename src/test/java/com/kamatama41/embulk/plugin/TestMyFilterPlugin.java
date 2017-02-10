@@ -23,7 +23,7 @@ public class TestMyFilterPlugin extends EmbulkPluginTest {
         final String inConfigPath = "yaml/myfilter_input.yml";
 
         // Construct filter-config
-        ConfigSource config = newConfig().set("type", "my_filter");
+        ConfigSource config = config().set("type", "my_filter");
 
         // Run Embulk
         runFilter(config, inConfigPath);

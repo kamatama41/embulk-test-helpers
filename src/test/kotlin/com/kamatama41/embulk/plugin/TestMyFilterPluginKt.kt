@@ -19,7 +19,7 @@ class TestMyFilterPluginKt : EmbulkPluginTest() {
     @Test
     fun incrementsJustLongColumns() {
         // Construct filter-config
-        val config = newConfig().set("type", "my_filter")
+        val config = config().set("type", "my_filter")
 
         // Run Embulk
         runFilter(config, inConfigPath = "yaml/myfilter_input.yml")

@@ -17,9 +17,9 @@ class TestRenameFilterPluginKt : EmbulkPluginTest() {
 
     @Test fun renameColumn() {
         // Construct filter-config
-        val config = newConfig().set(
+        val config = config().set(
                 "type" to "rename",
-                "columns" to newConfig().set("age" to "renamed_age")
+                "columns" to config().set("age" to "renamed_age")
         )
 
         // Run Embulk
@@ -39,9 +39,9 @@ class TestRenameFilterPluginKt : EmbulkPluginTest() {
     }
 
     @Test fun renameJsonColumn() {
-        val config = newConfig().set(
+        val config = config().set(
                 "type" to "rename",
-                "columns" to newConfig().set("record" to "user_info")
+                "columns" to config().set("record" to "user_info")
         )
 
         runFilter(config, inConfigPath = "yaml/filter_json_input.yml")

@@ -25,8 +25,8 @@ abstract class EmbulkPluginTest {
         return embulk.RunConfig()
                 .inConfig(inConfig)
                 .configDiff(confDiff)
-                .execConfig(newConfig().set("min_output_tasks", 1))
-                .outConfig(newConfig().set("type", "test"))
+                .execConfig(config().set("min_output_tasks", 1))
+                .outConfig(config().set("type", "test"))
                 .run()
     }
 
@@ -35,8 +35,8 @@ abstract class EmbulkPluginTest {
         return embulk.RunConfig()
                 .inConfig(inConfig)
                 .resumeState(resumeState)
-                .execConfig(newConfig().set("min_output_tasks", 1))
-                .outConfig(newConfig().set("type", "test"))
+                .execConfig(config().set("min_output_tasks", 1))
+                .outConfig(config().set("type", "test"))
                 .resume()
     }
 
@@ -44,12 +44,12 @@ abstract class EmbulkPluginTest {
         return embulk.RunConfig()
                 .inConfig(configFromResource(inConfigPath))
                 .filterConfig(filterConfig)
-                .execConfig(newConfig().set("min_output_tasks", 1))
-                .outConfig(newConfig().set("type", "test"))
+                .execConfig(config().set("min_output_tasks", 1))
+                .outConfig(config().set("type", "test"))
                 .run()
     }
 
-    protected fun newConfig(): ConfigSource {
+    protected fun config(): ConfigSource {
         return embulk.newConfig()
     }
 }

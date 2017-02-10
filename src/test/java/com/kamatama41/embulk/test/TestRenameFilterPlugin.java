@@ -19,9 +19,9 @@ public class TestRenameFilterPlugin extends EmbulkPluginTest {
         final String inConfigPath = "yaml/filter_input.yml";
 
         // Construct filter-config
-        ConfigSource config = newConfig()
+        ConfigSource config = config()
                 .set("type", "rename")
-                .set("columns", newConfig()
+                .set("columns", config()
                         .set("age", "renamed_age")
                 );
 
@@ -45,9 +45,9 @@ public class TestRenameFilterPlugin extends EmbulkPluginTest {
     public void renameJsonColumn() {
         final String inConfigPath = "yaml/filter_json_input.yml";
 
-        ConfigSource config = newConfig()
+        ConfigSource config = config()
                 .set("type", "rename")
-                .set("columns", newConfig()
+                .set("columns", config()
                         .set("record", "user_info")
                 );
 
