@@ -48,4 +48,8 @@ fun configFromResource(name: String): ConfigSource {
     return configFromString(EmbulkTests.readResource(name))
 }
 
+fun listOf(vararg plugins: Class<*>): List<Class<*>> {
+    return plugins.toList()
+}
+
 data class Record internal constructor(private val values: List<Any>)

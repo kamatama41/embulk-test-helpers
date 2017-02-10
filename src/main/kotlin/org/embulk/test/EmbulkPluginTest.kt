@@ -4,20 +4,16 @@ import org.embulk.EmbulkEmbed
 import org.embulk.config.ConfigDiff
 import org.embulk.config.ConfigSource
 import org.embulk.exec.ResumeState
-import org.junit.Before
 
 abstract class EmbulkPluginTest {
-    lateinit private var embulk: ExtendedTestingEmbulk
-
-    @Before
-    fun setup() {
+    private val embulk: ExtendedTestingEmbulk by lazy {
         val builder = ExtendedTestingEmbulk.builder()
-        setup(builder)
-        embulk = builder.build() as ExtendedTestingEmbulk
+        plugins()?.forEach { builder.registerPlugin(it) }
+        builder.build() as ExtendedTestingEmbulk
     }
 
-    protected open fun setup(builder: TestingEmbulk.Builder?) {
-        // You can override this method in your test class
+    protected open fun plugins(): List<Class<*>>? {
+        return emptyList()
     }
 
     @JvmOverloads
