@@ -1,6 +1,5 @@
-package com.kamatama41.embulk.test;
+package com.kamatama41.embulk.plugin;
 
-import com.kamatama41.embulk.plugin.MyFilterPlugin;
 import org.embulk.config.ConfigSource;
 import org.embulk.spi.FilterPlugin;
 import org.embulk.test.EmbulkPluginTest;
