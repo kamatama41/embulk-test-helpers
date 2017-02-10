@@ -2,19 +2,17 @@ package com.kamatama41.embulk.plugin;
 
 import org.embulk.config.ConfigSource;
 import org.embulk.test.EmbulkPluginTest;
+import org.junit.Before;
 import org.junit.Test;
 
-import java.util.List;
-
 import static org.embulk.test.TestOutputPlugin.assertRecords;
-import static org.embulk.test.Utils.listOf;
 import static org.embulk.test.Utils.record;
 
 public class TestLongIncrementFilterPlugin extends EmbulkPluginTest {
 
-    @Override
-    protected List<Class<?>> plugins() {
-        return listOf(LongIncrementFilterPlugin.class);
+    @Before
+    public void setup() {
+        getBuilder().registerPlugin(LongIncrementFilterPlugin.class);
     }
 
     @Test

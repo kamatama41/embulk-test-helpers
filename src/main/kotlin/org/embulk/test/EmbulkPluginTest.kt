@@ -6,14 +6,9 @@ import org.embulk.config.ConfigSource
 import org.embulk.exec.ResumeState
 
 abstract class EmbulkPluginTest {
+    protected val builder: ExtendedTestingEmbulk.Builder = ExtendedTestingEmbulk.builder()
     private val embulk: ExtendedTestingEmbulk by lazy {
-        val builder = ExtendedTestingEmbulk.builder()
-        plugins()?.forEach { builder.registerPlugin(it) }
         builder.build() as ExtendedTestingEmbulk
-    }
-
-    protected open fun plugins(): List<Class<*>>? {
-        return emptyList()
     }
 
     @JvmOverloads

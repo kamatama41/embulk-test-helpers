@@ -34,13 +34,11 @@ class ExtendedTestingEmbulk internal constructor(builder: ExtendedTestingEmbulk.
 
         @JvmOverloads
         fun registerPlugin(
-                impl: Class<*>,
-                iface: Class<*> = guessPluginInterface(impl),
-                name: String = guessPluginName(impl.simpleName)): TestingEmbulk.Builder {
-            return this.registerPlugin(iface, name, impl)
+                impl: Class<*>, name: String = guessName(impl), iface: Class<*> = guessInterface(impl)): ExtendedTestingEmbulk.Builder {
+            return registerPlugin(iface, name, impl)
         }
 
-        private fun guessPluginInterface(impl: Class<*>): Class<*> {
+        fun guessInterface(impl: Class<*>): Class<*> {
             return impl.interfaces.find {
                 interfaceMap.keys.contains(it)
             }.let {
@@ -51,8 +49,8 @@ class ExtendedTestingEmbulk internal constructor(builder: ExtendedTestingEmbulk.
         /**
          * Remove "~~~Plugin" from class name and convert to snake case
          */
-        private fun guessPluginName(className: String): String {
-            return interfaceMap.values.fold(className) { name, iface ->
+        fun guessName(impl: Class<*>): String {
+            return interfaceMap.values.fold(impl.simpleName) { name, iface ->
                 name.removeSuffix(iface.simpleName)
             }.toSnakeCase()
         }

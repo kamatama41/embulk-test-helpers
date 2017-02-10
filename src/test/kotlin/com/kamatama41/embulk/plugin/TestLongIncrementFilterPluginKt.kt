@@ -4,13 +4,15 @@ import org.embulk.test.EmbulkPluginTest
 import org.junit.Test
 
 import org.embulk.test.TestOutputPlugin.Matcher.assertRecords
-import org.embulk.test.listOf
 import org.embulk.test.record
+import org.embulk.test.registerPlugin
+import org.junit.Before
 
 class TestLongIncrementFilterPluginKt : EmbulkPluginTest() {
 
-    override fun plugins(): List<Class<*>>? {
-        return listOf(LongIncrementFilterPlugin::class)
+    @Before
+    fun setup() {
+        builder.registerPlugin(LongIncrementFilterPlugin::class)
     }
 
     @Test
