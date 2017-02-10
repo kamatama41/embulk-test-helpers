@@ -27,15 +27,16 @@ class ExtendedTestingEmbulk internal constructor(builder: ExtendedTestingEmbulk.
 
     class Builder : TestingEmbulk.Builder() {
         override fun build(): TestingEmbulk {
-            this.registerPlugin(InputPlugin::class, "test", TestInputPlugin::class)
-            this.registerPlugin(OutputPlugin::class, "test", TestOutputPlugin::class)
+            this.registerPlugin(TestInputPlugin::class, "test")
+            this.registerPlugin(TestOutputPlugin::class, "test")
             return ExtendedTestingEmbulk(this)
         }
 
         @JvmOverloads
         fun registerPlugin(
                 impl: Class<*>, name: String = guessName(impl), iface: Class<*> = guessInterface(impl)): ExtendedTestingEmbulk.Builder {
-            return registerPlugin(iface, name, impl)
+            super.registerPlugin(iface, name, impl)
+            return this
         }
 
         fun guessInterface(impl: Class<*>): Class<*> {
