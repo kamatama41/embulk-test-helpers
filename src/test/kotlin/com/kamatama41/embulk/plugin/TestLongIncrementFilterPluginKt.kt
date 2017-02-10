@@ -7,19 +7,19 @@ import org.embulk.test.TestOutputPlugin.Matcher.assertRecords
 import org.embulk.test.listOf
 import org.embulk.test.record
 
-class TestMyFilterPluginKt : EmbulkPluginTest() {
+class TestLongIncrementFilterPluginKt : EmbulkPluginTest() {
 
     override fun plugins(): List<Class<*>>? {
-        return listOf(MyFilterPlugin::class)
+        return listOf(LongIncrementFilterPlugin::class)
     }
 
     @Test
     fun incrementsJustLongColumns() {
         // Construct filter-config
-        val config = config().set("type", "my")
+        val config = config().set("type", "long_increment")
 
         // Run Embulk
-        runFilter(config, inConfigPath = "yaml/myfilter_input.yml")
+        runFilter(config, inConfigPath = "yaml/long_increment_input.yml")
 
         // Check read records
         assertRecords(

@@ -10,20 +10,20 @@ import static org.embulk.test.TestOutputPlugin.assertRecords;
 import static org.embulk.test.Utils.listOf;
 import static org.embulk.test.Utils.record;
 
-public class TestMyFilterPlugin extends EmbulkPluginTest {
+public class TestLongIncrementFilterPlugin extends EmbulkPluginTest {
 
     @Override
     protected List<Class<?>> plugins() {
-        return listOf(MyFilterPlugin.class);
+        return listOf(LongIncrementFilterPlugin.class);
     }
 
     @Test
     public void incrementsJustLongColumns() {
         // Specify input data
-        final String inConfigPath = "yaml/myfilter_input.yml";
+        final String inConfigPath = "yaml/long_increment_input.yml";
 
         // Construct filter-config
-        ConfigSource config = config().set("type", "my");
+        ConfigSource config = config().set("type", "long_increment");
 
         // Run Embulk
         runFilter(config, inConfigPath);
