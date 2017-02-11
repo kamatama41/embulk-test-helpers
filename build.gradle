@@ -8,6 +8,10 @@ buildscript {
     }
 }
 
+plugins {
+    id 'org.ajoberstar.grgit' version '1.6.0'
+    id 'net.researchgate.release' version '2.5.0'
+}
 apply plugin: 'java'
 apply plugin: "kotlin"
 apply plugin: 'maven-publish'
@@ -24,15 +28,24 @@ task sourceJar(type: Jar) {
     from sourceSets.main.allSource
 }
 
+task removeRepository {
+    doLast {
+        grgit.remove(patterns: ['repository'])
+        grgit.commit(message: 'Remove repository')
+    }
+}
+
+// Configuration for maven-publish plugin
 publishing {
     publications {
         maven(MavenPublication) {
             groupId 'com.kamatama41'
             artifactId 'embulk-test-helpers'
-            version '0.2.0-SNAPSHOT'
+            version version
 
             from components.java
 
+            // Add source jar to publication
             artifact sourceJar {
                 classifier "sources"
             }
@@ -40,10 +53,24 @@ publishing {
     }
     repositories {
         maven {
-            url "file://${new File(rootDir, "repository").absolutePath}"
+            url "file://${new File(rootDir, version.contains('-SNAPSHOT') ? "snapshot" : "repository").absolutePath}"
         }
     }
 }
+
+// Commit 'repository' dir after publishing by override publish task
+publish {
+    doLast {
+        grgit.add(patterns: ['repository', 'snapshot'])
+        grgit.commit(message: 'Release new version')
+    }
+}
+
+// Configuration for release plugin
+release {
+    git { requireBranch = 'gh-pages' }
+}
+afterReleaseBuild.dependsOn publish
 
 dependencies {
     compile "org.embulk:embulk-standards:0.8.16"

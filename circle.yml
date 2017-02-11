@@ -4,11 +4,10 @@ machine:
 
 deployment:
   snapshot:
-    branch: /^(?!(master|release|gh-pages|snapshot)$).+$/
+    branch: /^(?!(master|gh-pages|snapshot)$).+$/
     commands:
-      - rm -rf ./repository
-      - ./release.sh snapshot
+      - ./release_snapshot.sh
   release:
-    branch: master
+    branch: gh-pages
     commands:
-      - ./release.sh release
+      - ./gradlew release -Prelease.useAutomaticVersion=true
