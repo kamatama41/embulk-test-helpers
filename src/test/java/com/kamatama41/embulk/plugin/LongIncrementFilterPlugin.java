@@ -17,7 +17,7 @@ import org.embulk.spi.time.Timestamp;
 import org.embulk.spi.type.Types;
 import org.msgpack.value.Value;
 
-public class MyFilterPlugin implements FilterPlugin {
+public class LongIncrementFilterPlugin implements FilterPlugin {
 
     interface PluginTask extends Task {
     }
