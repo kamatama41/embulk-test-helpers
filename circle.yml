@@ -3,7 +3,12 @@ machine:
     version: oraclejdk7
 
 deployment:
+  snapshot:
+    branch: /^(?!(master)$).+$/
+    commands:
+      - rm -rf ./repository
+      - ./release.sh snapshot
   release:
     branch: master
     commands:
-      - ./release.sh
+      - ./release.sh release
