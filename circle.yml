@@ -1,9 +1,13 @@
 machine:
   java:
-    version: oraclejdk7
+    version: oraclejdk8
 
 deployment:
-  release:
-    branch: master
+  snapshot:
+    branch: /^(?!(master|gh-pages|snapshot)$).+$/
     commands:
-      - ./release.sh
+      - ./release_snapshot.sh
+  release:
+    branch: gh-pages
+    commands:
+      - ./gradlew release -Prelease.useAutomaticVersion=true
