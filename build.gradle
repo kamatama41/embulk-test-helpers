@@ -10,6 +10,7 @@ buildscript {
 
 plugins {
     id 'org.ajoberstar.grgit' version '1.6.0'
+    id 'net.researchgate.release' version '2.5.0'
 }
 apply plugin: 'java'
 apply plugin: "kotlin"
@@ -40,7 +41,7 @@ publishing {
         maven(MavenPublication) {
             groupId 'com.kamatama41'
             artifactId 'embulk-test-helpers'
-            version '0.2.0-SNAPSHOT'
+            version version
 
             from components.java
 
@@ -64,6 +65,12 @@ publish {
         grgit.commit(message: 'Release new version')
     }
 }
+
+// Configuration for release plugin
+release {
+    git { requireBranch = 'gh-pages' }
+}
+afterReleaseBuild.dependsOn publish
 
 dependencies {
     compile "org.embulk:embulk-standards:0.8.16"
