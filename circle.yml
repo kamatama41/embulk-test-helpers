@@ -4,10 +4,18 @@ machine:
 
 deployment:
   snapshot:
-    branch: /^(?!(master|gh-pages|snapshot)$).+$/
+    branch: /^(?!(master|release|gh-pages|snapshot)$).+$/
     commands:
-      - ./release_snapshot.sh
+      - ./gradlew removeRepository publish
+      - git checkout -b snapshot
+      - git push --force-with-lease origin snapshot
+  release:
+    branch: release
+    commands:
+      - git checkout -b gh-pages
+      - ./gradlew release -Prelease.useAutomaticVersion=true
   release:
     branch: gh-pages
     commands:
-      - ./gradlew release -Prelease.useAutomaticVersion=true
+      - git checkout -b master
+      - git push origin master
