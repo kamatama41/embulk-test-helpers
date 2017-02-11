@@ -6,9 +6,8 @@ deployment:
   snapshot:
     branch: /^(?!(master|release|gh-pages|snapshot)$).+$/
     commands:
-      - rm -rf ./repository
-      - ./release.sh snapshot
-  release:
-    branch: master
-    commands:
-      - ./release.sh release
+      - ./release_snapshot.sh
+#  release:
+#    branch: master
+#    commands:
+#      - ./release.sh release
