@@ -8,6 +8,9 @@ import org.embulk.test.record
 import org.embulk.test.registerPlugin
 import org.junit.Before
 
+/**
+ * Kotlin version of [TestLongIncrementFilterPlugin]
+ */
 class TestLongIncrementFilterPluginKt : EmbulkPluginTest() {
 
     @Before

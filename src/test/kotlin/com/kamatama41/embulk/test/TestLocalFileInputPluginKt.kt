@@ -12,6 +12,9 @@ import org.embulk.test.record
 import org.embulk.test.timestamp
 import java.io.File
 
+/**
+ * Kotlin version of [TestLocalFileInputPlugin]
+ */
 @RunWith(Enclosed::class)
 class TestLocalFileInputPluginKt {
 
