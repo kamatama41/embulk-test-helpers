@@ -14,7 +14,7 @@ deployment:
     commands:
       - git checkout -b gh-pages
       - ./gradlew release -Prelease.useAutomaticVersion=true
-  release:
+  reflect-to-master:
     branch: gh-pages
     commands:
       - git checkout -b master
