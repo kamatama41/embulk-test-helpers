@@ -7,11 +7,13 @@ Add the snippets to your build.gradle
 repositories {
     ....
     maven { url 'http://kamatama41.github.com/embulk-test-helpers/repository' }
+    // If you want to use a snapshot version
+    maven { url 'https://raw.github.com/kamatama41/embulk-test-helpers/snapshot/repository' }
 }
 
 dependencies {
     ....
-    testCompile 'com.kamatama41:embulk-test-helpers:0.1.2'
+    testCompile 'com.kamatama41:embulk-test-helpers:0.2.0'
 }
 ```
 
