@@ -1,3 +1,5 @@
+[![CircleCI](https://circleci.com/gh/kamatama41/embulk-test-helpers.svg?style=svg)](https://circleci.com/gh/kamatama41/embulk-test-helpers)
+
 # embulk-test-helpers
 Helper classes for Unit test of [Embulk](http://www.embulk.org) plugins.
 
