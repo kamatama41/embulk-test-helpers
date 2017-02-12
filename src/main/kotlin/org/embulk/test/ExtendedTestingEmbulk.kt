@@ -4,9 +4,12 @@ import org.embulk.EmbulkEmbed
 import org.embulk.config.ConfigDiff
 import org.embulk.config.ConfigSource
 import org.embulk.exec.ResumeState
+import org.embulk.spi.DecoderPlugin
+import org.embulk.spi.EncoderPlugin
 import org.embulk.spi.FileInputPlugin
 import org.embulk.spi.FileOutputPlugin
 import org.embulk.spi.FilterPlugin
+import org.embulk.spi.FormatterPlugin
 import org.embulk.spi.InputPlugin
 import org.embulk.spi.OutputPlugin
 import org.embulk.spi.ParserPlugin
@@ -27,8 +30,8 @@ class ExtendedTestingEmbulk internal constructor(builder: ExtendedTestingEmbulk.
 
     class Builder : TestingEmbulk.Builder() {
         override fun build(): TestingEmbulk {
-            this.registerPlugin(TestInputPlugin::class, "test")
-            this.registerPlugin(TestOutputPlugin::class, "test")
+            this.registerPlugin(TestFileInputPlugin::class)
+            this.registerPlugin(TestOutputPlugin::class)
             return ExtendedTestingEmbulk(this)
         }
 
@@ -42,28 +45,30 @@ class ExtendedTestingEmbulk internal constructor(builder: ExtendedTestingEmbulk.
         fun guessInterface(impl: Class<*>): Class<*> {
             return impl.interfaces.find {
                 interfaceMap.keys.contains(it)
-            }.let {
+            }?.let {
                 interfaceMap[it]
-            } ?: throw IllegalStateException("Plugin interface not found")
+            } ?: throw IllegalArgumentException("Plugin interface not found in ${impl.canonicalName}")
         }
 
-        /**
-         * Remove "~~~Plugin" from class name and convert to snake case
-         */
         fun guessName(impl: Class<*>): String {
-            return interfaceMap.values.fold(impl.simpleName) { name, iface ->
-                name.removeSuffix(iface.simpleName)
-            }.toSnakeCase()
+            return impl.interfaces.find {
+                interfaceMap.keys.contains(it)
+            }?.let {
+                impl.simpleName.removeSuffix(it.simpleName)
+            }?.toSnakeCase() ?: throw IllegalArgumentException("Plugin interface not found in ${impl.canonicalName}")
         }
 
         private companion object {
             private val interfaceMap = mapOf(
                     InputPlugin::class.java to InputPlugin::class.java,
-                    FileInputPlugin::class.java to InputPlugin::class.java,
-                    ParserPlugin::class.java to ParserPlugin::class.java,
-                    FilterPlugin::class.java to FilterPlugin::class.java,
                     OutputPlugin::class.java to OutputPlugin::class.java,
-                    FileOutputPlugin::class.java to OutputPlugin::class.java
+                    FilterPlugin::class.java to FilterPlugin::class.java,
+                    FileInputPlugin::class.java to InputPlugin::class.java,
+                    FileOutputPlugin::class.java to OutputPlugin::class.java,
+                    ParserPlugin::class.java to ParserPlugin::class.java,
+                    FormatterPlugin::class.java to FormatterPlugin::class.java,
+                    DecoderPlugin::class.java to DecoderPlugin::class.java,
+                    EncoderPlugin::class.java to EncoderPlugin::class.java
             )
         }
     }
