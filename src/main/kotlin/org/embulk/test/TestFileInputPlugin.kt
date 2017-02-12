@@ -14,7 +14,7 @@ import org.embulk.spi.TransactionalFileInput
 import org.embulk.spi.time.TimestampParser
 import org.embulk.spi.util.InputStreamTransactionalFileInput
 
-class TestInputPlugin : FileInputPlugin {
+class TestFileInputPlugin : FileInputPlugin {
 
     interface PluginTask : Task, TimestampParser.Task {
         @get:Config("data")

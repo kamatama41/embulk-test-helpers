@@ -10,6 +10,11 @@ fun ExtendedTestingEmbulk.Builder.registerPlugin(
     return registerPlugin(impl.java, name ?: guessName(impl.java), iface?.java ?: guessInterface(impl.java))
 }
 
+fun ExtendedTestingEmbulk.Builder.registerPlugins(vararg impls: KClass<*>): ExtendedTestingEmbulk.Builder {
+    impls.forEach { registerPlugin(it.java) }
+    return this
+}
+
 fun <T : DataSource> T.set(vararg keyValues: Pair<String, Any>): T {
     keyValues.forEach { this.set(it.first, it.second) }
     return this
