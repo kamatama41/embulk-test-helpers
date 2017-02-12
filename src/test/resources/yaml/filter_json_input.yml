@@ -1,0 +1,8 @@
+type: test
+data:
+- >-
+ {"username": "user1", "age": 20}
+- >-
+ {"username": "user2", "age": 21}
+parser:
+  type: json
