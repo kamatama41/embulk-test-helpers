@@ -23,4 +23,5 @@ deployment:
     branch: gh-pages
     commands:
       - git checkout master
+      - git merge -m "Merge gh-pages into master" gh-pages
       - git push origin master
