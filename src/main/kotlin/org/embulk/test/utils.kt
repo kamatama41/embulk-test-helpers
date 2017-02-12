@@ -24,16 +24,16 @@ fun timestamp(year: Int, month: Int, date: Int, hour: Int = 0, minute: Int = 0, 
 }
 
 // Convert Int to Long since Embulk supports only Long
-fun record(vararg values: Any): Record = Record(values.map { (it as? Int)?.toLong() ?: it })
+fun record(vararg values: Any?): Record = Record(values.map { (it as? Int)?.toLong() ?: it })
 
 fun column(name: String, type: Type): Column = Column(-1, name, type)
 
 fun json(json: String): Value = jsonParser.parse(json)
 
-fun json(vararg pairs: Pair<String, Any>): Value = json(mapper.writeValueAsString(mapOf(*pairs)))
+fun json(vararg pairs: Pair<String, Any?>): Value = json(mapper.writeValueAsString(mapOf(*pairs)))
 
 fun configFromString(yaml: String): ConfigSource = EmbulkEmbed.newSystemConfigLoader().fromYamlString(yaml)
 
 fun configFromResource(name: String): ConfigSource = configFromString(EmbulkTests.readResource(name))
 
-data class Record internal constructor(private val values: List<Any>)
+data class Record internal constructor(private val values: List<Any?>)
