@@ -21,5 +21,5 @@ dependencies {
 
 ## Usage
 Please refer to sample test cases
-- [Java](https://github.com/kamatama41/embulk-test-helpers/tree/master/src/test/java)
-- [Kotlin](https://github.com/kamatama41/embulk-test-helpers/tree/master/src/test/kotlin)
+- [Java](https://github.com/kamatama41/embulk-test-helpers/tree/master/src/test/java/com/kamatama41/embulk/test)
+- [Kotlin](https://github.com/kamatama41/embulk-test-helpers/tree/master/src/test/kotlin/com/kamatama41/embulk/test)
