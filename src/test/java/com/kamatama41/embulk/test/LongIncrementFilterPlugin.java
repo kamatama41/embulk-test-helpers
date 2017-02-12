@@ -1,4 +1,4 @@
-package com.kamatama41.embulk.plugin;
+package com.kamatama41.embulk.test;
 
 
 import org.embulk.config.ConfigSource;
