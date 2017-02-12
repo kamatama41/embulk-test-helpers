@@ -22,5 +22,5 @@ deployment:
   reflect-to-master:
     branch: gh-pages
     commands:
-      - git checkout -b master
+      - git checkout master
       - git push origin master
