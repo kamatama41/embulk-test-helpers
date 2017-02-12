@@ -30,8 +30,7 @@ class ExtendedTestingEmbulk internal constructor(builder: ExtendedTestingEmbulk.
 
     class Builder : TestingEmbulk.Builder() {
         override fun build(): TestingEmbulk {
-            this.registerPlugin(TestFileInputPlugin::class)
-            this.registerPlugin(TestOutputPlugin::class)
+            this.registerPlugins(TestFileInputPlugin::class, TestOutputPlugin::class)
             return ExtendedTestingEmbulk(this)
         }
 
@@ -39,6 +38,11 @@ class ExtendedTestingEmbulk internal constructor(builder: ExtendedTestingEmbulk.
         fun registerPlugin(
                 impl: Class<*>, name: String = guessName(impl), iface: Class<*> = guessInterface(impl)): ExtendedTestingEmbulk.Builder {
             super.registerPlugin(iface, name, impl)
+            return this
+        }
+
+        fun registerPlugins(vararg impls: Class<*>): ExtendedTestingEmbulk.Builder {
+            impls.forEach { registerPlugin(it) }
             return this
         }
 
