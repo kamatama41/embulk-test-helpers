@@ -22,5 +22,6 @@ deployment:
   reflect-to-master:
     branch: gh-pages
     commands:
-      - git checkout -b master
+      - git checkout master
+      - git merge -m "Merge gh-pages into master" gh-pages
       - git push origin master
