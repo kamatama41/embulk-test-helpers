@@ -16,9 +16,9 @@ internal class Recorder {
     private var schema: Schema? = null
 
     @Synchronized fun addRecord(reader: PageReader) {
-        val values: MutableList<Any> = arrayListOf()
+        val values: MutableList<Any?> = arrayListOf()
         reader.schema.visitColumns(object : Pages.ObjectColumnVisitor(reader) {
-            override fun visit(column: Column, value: Any) {
+            override fun visit(column: Column, value: Any?) {
                 values.add(value)
             }
         })
