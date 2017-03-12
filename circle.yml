@@ -17,6 +17,7 @@ deployment:
   release:
     branch: release
     commands:
+      - git fetch
       - git checkout master
       - git pull
-      - ./gradlew release -Prelease.useAutomaticVersion=true
+      - ./gradlew release -Prelease.useAutomaticVersion=true --stacktrace
