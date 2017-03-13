@@ -17,7 +17,6 @@ deployment:
   release:
     branch: release
     commands:
-      - git fetch
       - git checkout master
-      - git pull
+      - git reset --hard HEAD
       - ./gradlew release -Prelease.useAutomaticVersion=true --stacktrace
