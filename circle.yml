@@ -19,4 +19,4 @@ deployment:
     commands:
       - git checkout master
       - git reset --hard origin/master
-      - ./gradlew release -Prelease.useAutomaticVersion=true
+      - ./gradlew release -Prelease.useAutomaticVersion=true --stacktrace
