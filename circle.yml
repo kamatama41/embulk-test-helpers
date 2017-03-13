@@ -20,4 +20,5 @@ deployment:
       - git checkout master
       - git --no-pager log --decorate=short --pretty=oneline -n5
       - git reset --hard HEAD
+      - git pull
       - ./gradlew release -Prelease.useAutomaticVersion=true --stacktrace
