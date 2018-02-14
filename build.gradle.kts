@@ -5,11 +5,12 @@ buildscript {
     extra["kotlinVersion"] = kotlinVersion
     repositories {
         jcenter()
-        maven { setUrl("http://kamatama41.github.com/maven-repository/repository") }
+        // maven { setUrl("http://kamatama41.github.com/maven-repository/repository") }
+         maven { setUrl("${System.getProperty("user.home")}/gh-maven-repository/repository") }
     }
     dependencies {
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion")
-        classpath("com.github.kamatama41:gradle-git-release-plugin:0.1.0")
+        classpath("com.github.kamatama41:gradle-git-release-plugin:0.2.0-SNAPSHOT")
     }
 }
 
@@ -41,4 +42,5 @@ configure<GitReleaseExtension> {
     artifactId = "embulk-test-helpers"
     repoUri = "git@github.com:kamatama41/maven-repository.git"
     repoDir = file("${System.getProperty("user.home")}/gh-maven-repository")
+    releaseBranch = "release-test"
 }
