@@ -1,22 +1,30 @@
-machine:
-  java:
-    version: oraclejdk8
-
-dependencies:
-  pre:
-    - git config --global user.email "shiketaudonko41@gmail.com"
-    - git config --global user.name "kamatama41"
-  override:
-    - ./gradlew dependencies
-
-test:
-  override:
-    - ./gradlew check --stacktrace
-
-deployment:
-  release:
-    branch: release
-    commands:
-      - git checkout master
-      - git reset --hard origin/master
-      - ./gradlew release -Prelease.useAutomaticVersion=true --stacktrace
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/openjdk:8
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "build.gradle.kts" }}
+          - v1-dependencies-
+      # Bundle dependencies
+      - run: ./gradlew dependencies
+      - save_cache:
+          paths:
+            - ~/.m2
+          key: v1-dependencies-{{ checksum "build.gradle.kts" }}
+      # Test
+      - run: ./gradlew check --stacktrace
+      # Release
+      - deploy:
+          name: Release
+          command: |
+            if [ "${CIRCLE_BRANCH}" = "release" ]; then
+              git config --global user.email "shiketaudonko41@gmail.com"
+              git config --global user.name "kamatama41"
+              git checkout master
+              git reset --hard origin/master
+              ./gradlew release -Prelease.useAutomaticVersion=true --stacktrace
+            fi
