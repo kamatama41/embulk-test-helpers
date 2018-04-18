@@ -1,21 +1,21 @@
 import com.github.kamatama41.gradle.gitrelease.GitReleaseExtension
 
 buildscript {
-    val kotlinVersion = "1.2.31"
-    extra["kotlinVersion"] = kotlinVersion
     repositories {
         jcenter()
         maven { setUrl("http://kamatama41.github.com/maven-repository/repository") }
     }
     dependencies {
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion")
         classpath("com.github.kamatama41:gradle-git-release-plugin:0.2.0")
     }
 }
 
+plugins {
+    idea
+    kotlin("jvm") version "1.2.31"
+}
+
 apply {
-    plugin("idea")
-    plugin("kotlin")
     plugin("com.github.kamatama41.git-release")
 }
 
@@ -28,9 +28,8 @@ configure<JavaPluginConvention> {
     targetCompatibility = JavaVersion.VERSION_1_8
 }
 
-val kotlinVersion: String by extra
 dependencies {
-    compile("org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion")
+    compile(kotlin("stdlib"))
     compile("org.embulk:embulk-standards:0.9.7")
     compile("org.embulk:embulk-test:0.9.7")
     testCompile("junit:junit:4.12")
