@@ -31,8 +31,8 @@ configure<JavaPluginConvention> {
 val kotlinVersion: String by extra
 dependencies {
     compile("org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion")
-    compile("org.embulk:embulk-standards:0.8.18")
-    compile("org.embulk:embulk-test:0.8.18")
+    compile("org.embulk:embulk-standards:0.9.7")
+    compile("org.embulk:embulk-test:0.9.7")
     testCompile("junit:junit:4.12")
 }
 
