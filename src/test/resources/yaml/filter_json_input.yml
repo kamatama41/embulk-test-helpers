@@ -1,8 +1,6 @@
-type: test
-data:
-- >-
- {"username": "user1", "age": 20}
-- >-
- {"username": "user2", "age": 21}
-parser:
-  type: json
+type: config
+columns:
+- {name: record, type: json}
+values:
+- - [{"username": "user1", "age": 20}]
+- - [{"username": "user2", "age": 21}]

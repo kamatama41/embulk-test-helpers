@@ -1,9 +1,7 @@
-type: test
-data:
-- user1,20
-- user2,21
-parser:
-  type: csv
-  columns:
-  - {name: username, type: string}
-  - {name: age, type: long}
+type: config
+columns:
+- {name: username, type: string}
+- {name: age, type: long}
+values:
+- - [user1,20]
+- - [user2,21]

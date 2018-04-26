@@ -30,7 +30,7 @@ class ExtendedTestingEmbulk internal constructor(builder: ExtendedTestingEmbulk.
 
     class Builder : TestingEmbulk.Builder() {
         override fun build(): TestingEmbulk {
-            this.registerPlugins(TestFileInputPlugin::class, TestOutputPlugin::class)
+            this.registerPlugins(TestOutputPlugin::class)
             return ExtendedTestingEmbulk(this)
         }
 
