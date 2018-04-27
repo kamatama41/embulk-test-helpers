@@ -18,7 +18,7 @@ class ExtendedTestingEmbulk internal constructor(builder: ExtendedTestingEmbulk.
     private val superEmbed: EmbulkEmbed
 
     init {
-        this.superEmbed = extractSuperField<EmbulkEmbed>("embed")
+        this.superEmbed = extractSuperField("embed")
     }
 
     @Suppress("UNCHECKED_CAST")
@@ -30,7 +30,7 @@ class ExtendedTestingEmbulk internal constructor(builder: ExtendedTestingEmbulk.
 
     class Builder : TestingEmbulk.Builder() {
         override fun build(): TestingEmbulk {
-            this.registerPlugins(TestFileInputPlugin::class, TestOutputPlugin::class)
+            this.registerPlugins(TestOutputPlugin::class)
             return ExtendedTestingEmbulk(this)
         }
 
