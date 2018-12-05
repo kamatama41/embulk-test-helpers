@@ -2,11 +2,11 @@ package com.kamatama41.embulk.test;
 
 import org.embulk.config.ConfigSource;
 import org.embulk.test.EmbulkPluginTest;
+import org.embulk.test.EmbulkTest;
 import org.embulk.test.TestingEmbulk;
-import org.junit.After;
-import org.junit.Test;
-import org.junit.experimental.runners.Enclosed;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -18,10 +18,10 @@ import static org.embulk.test.Utils.record;
 import static org.embulk.test.Utils.timestamp;
 import static org.embulk.test.TestOutputPlugin.assertRecords;
 
-@RunWith(Enclosed.class)
 public class TestLocalFileInputPlugin {
-
-    public static class DefaultCase extends EmbulkPluginTest {
+    @Nested
+    @EmbulkTest
+    public class DefaultCase extends EmbulkPluginTest {
         @Test
         public void readFile() {
             // Read in-config from resources
@@ -40,11 +40,13 @@ public class TestLocalFileInputPlugin {
         }
     }
 
-    public static class ConfDiffCase extends EmbulkPluginTest {
-        private static final String LINE_SEPARATOR = System.getProperty("line.separator");
-        private static final Path TMP_FILE = Paths.get("./src/test/resources/input/file_input_tmp.csv");
+    @Nested
+    @EmbulkTest
+    public class ConfDiffCase extends EmbulkPluginTest {
+        private final String LINE_SEPARATOR = System.getProperty("line.separator");
+        private final Path TMP_FILE = Paths.get("./src/test/resources/input/file_input_tmp.csv");
 
-        @After
+        @AfterEach
         public void cleanup() throws IOException {
             Files.delete(TMP_FILE);
         }

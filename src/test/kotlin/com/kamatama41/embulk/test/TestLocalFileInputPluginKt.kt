@@ -1,25 +1,22 @@
 package com.kamatama41.embulk.test
 
-import org.embulk.test.EmbulkPluginTest
-import org.junit.After
-import org.junit.Test
-import org.junit.experimental.runners.Enclosed
-import org.junit.runner.RunWith
+import org.embulk.test.*
 
 import org.embulk.test.TestOutputPlugin.Matcher.assertRecords
-import org.embulk.test.configFromResource
-import org.embulk.test.record
-import org.embulk.test.timestamp
+import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.Nested
+import org.junit.jupiter.api.Test
 import java.io.File
 
 /**
  * Kotlin version of [TestLocalFileInputPlugin]
  */
-@RunWith(Enclosed::class)
 class TestLocalFileInputPluginKt {
 
-    class DefaultCase : EmbulkPluginTest() {
-        @Test fun readFile() {
+    @Nested @EmbulkTest
+    inner class DefaultCase : EmbulkPluginTest() {
+        @Test
+        fun readFile() {
             // Run Embulk
             runInput(inConfig = configFromResource("yaml/file_input.yml"))
 
@@ -33,9 +30,10 @@ class TestLocalFileInputPluginKt {
         }
     }
 
-    class ConfDiffCase : EmbulkPluginTest() {
-        @After fun cleanup() {
-            TMP_FILE.delete()
+    @Nested @EmbulkTest
+    inner class ConfDiffCase : EmbulkPluginTest() {
+        @AfterEach fun cleanup() {
+            tmpFile.delete()
         }
 
         @Test fun testConfDiff() {
@@ -66,11 +64,9 @@ class TestLocalFileInputPluginKt {
             |id,account,time,purchase,comment
             |5,45505,2017-01-31 10:21:02,20170131,test
             """.trimMargin()
-            TMP_FILE.writeText(msg)
+            tmpFile.writeText(msg)
         }
 
-        companion object {
-            private val TMP_FILE = File("./src/test/resources/input/file_input_tmp.csv")
-        }
+        private val tmpFile = File("./src/test/resources/input/file_input_tmp.csv")
     }
 }

@@ -2,7 +2,8 @@ package com.kamatama41.embulk.test;
 
 import org.embulk.config.ConfigSource;
 import org.embulk.test.EmbulkPluginTest;
-import org.junit.Test;
+import org.embulk.test.EmbulkTest;
+import org.junit.jupiter.api.Test;
 
 import static org.embulk.test.TestOutputPlugin.assertRecords;
 import static org.embulk.test.TestOutputPlugin.assertSchema;
@@ -11,6 +12,7 @@ import static org.embulk.spi.type.Types.*;
 import static org.embulk.test.Utils.json;
 import static org.embulk.test.Utils.record;
 
+@EmbulkTest
 public class TestRenameFilterPlugin extends EmbulkPluginTest {
 
     @Test
