@@ -41,3 +41,10 @@ configure<GitReleaseExtension> {
     repoUri = "git@github.com:kamatama41/maven-repository.git"
     repoDir = file("${System.getProperty("user.home")}/gh-maven-repository")
 }
+
+tasks {
+    named<Test>("test") {
+        // Not to exceed the limit of CircleCI (4GB)
+        maxHeapSize = "3g"
+    }
+}
