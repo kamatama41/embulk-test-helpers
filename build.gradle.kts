@@ -12,7 +12,7 @@ buildscript {
 
 plugins {
     idea
-    kotlin("jvm") version "1.2.31"
+    kotlin("jvm") version "1.3.10"
 }
 
 apply {
@@ -30,8 +30,8 @@ configure<JavaPluginConvention> {
 
 dependencies {
     compile(kotlin("stdlib"))
-    compile("org.embulk:embulk-standards:0.9.7")
-    compile("org.embulk:embulk-test:0.9.7")
+    compile("org.embulk:embulk-standards:0.9.11")
+    compile("org.embulk:embulk-test:0.9.11")
     testCompile("junit:junit:4.12")
 }
 
