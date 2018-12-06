@@ -4,9 +4,8 @@ import org.embulk.spi.Column
 import org.embulk.spi.PageReader
 import org.embulk.spi.Schema
 import org.embulk.spi.util.Pages
-
+import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.`is`
-import org.junit.Assert.assertThat
 
 /**
  * Repository of [Record]

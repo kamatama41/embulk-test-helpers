@@ -6,10 +6,8 @@ import org.embulk.config.ConfigSource
 import org.embulk.exec.ResumeState
 
 abstract class EmbulkPluginTest {
-    protected val builder: ExtendedTestingEmbulk.Builder = ExtendedTestingEmbulk.builder()
-    private val embulk: ExtendedTestingEmbulk by lazy {
-        builder.build() as ExtendedTestingEmbulk
-    }
+    @Embulk
+    lateinit var embulk: ExtendedTestingEmbulk
 
     @JvmOverloads
     protected fun runInput(inConfig: ConfigSource, confDiff: ConfigDiff? = null): TestingEmbulk.RunResult {

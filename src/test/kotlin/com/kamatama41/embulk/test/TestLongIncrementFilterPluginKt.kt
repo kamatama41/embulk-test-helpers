@@ -1,22 +1,17 @@
 package com.kamatama41.embulk.test
 
 import org.embulk.test.EmbulkPluginTest
-import org.junit.Test
+import org.embulk.test.EmbulkTest
 
 import org.embulk.test.TestOutputPlugin.Matcher.assertRecords
 import org.embulk.test.record
-import org.embulk.test.registerPlugin
-import org.junit.Before
+import org.junit.jupiter.api.Test
 
 /**
  * Kotlin version of [TestLongIncrementFilterPlugin]
  */
+@EmbulkTest(value = [LongIncrementFilterPlugin::class])
 class TestLongIncrementFilterPluginKt : EmbulkPluginTest() {
-
-    @Before
-    fun setup() {
-        builder.registerPlugin(LongIncrementFilterPlugin::class)
-    }
 
     @Test
     fun incrementsJustLongColumns() {
