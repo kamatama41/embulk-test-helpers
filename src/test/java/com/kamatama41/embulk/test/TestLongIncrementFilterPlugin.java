@@ -2,18 +2,14 @@ package com.kamatama41.embulk.test;
 
 import org.embulk.config.ConfigSource;
 import org.embulk.test.EmbulkPluginTest;
-import org.junit.Before;
-import org.junit.Test;
+import org.embulk.test.EmbulkTest;
+import org.junit.jupiter.api.Test;
 
 import static org.embulk.test.TestOutputPlugin.assertRecords;
 import static org.embulk.test.Utils.record;
 
+@EmbulkTest(LongIncrementFilterPlugin.class)
 public class TestLongIncrementFilterPlugin extends EmbulkPluginTest {
-
-    @Before
-    public void setup() {
-        getBuilder().registerPlugin(LongIncrementFilterPlugin.class);
-    }
 
     @Test
     public void incrementsJustLongColumns() {

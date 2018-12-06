@@ -12,7 +12,7 @@ buildscript {
 
 plugins {
     idea
-    kotlin("jvm") version "1.2.31"
+    kotlin("jvm") version "1.3.10"
 }
 
 apply {
@@ -30,9 +30,10 @@ configure<JavaPluginConvention> {
 
 dependencies {
     compile(kotlin("stdlib"))
-    compile("org.embulk:embulk-standards:0.9.7")
-    compile("org.embulk:embulk-test:0.9.7")
-    testCompile("junit:junit:4.12")
+    compile("org.embulk:embulk-standards:0.9.11")
+    compile("org.embulk:embulk-test:0.9.11")
+    compile("org.junit.jupiter:junit-jupiter-api:5.3.2")
+    testRuntime("org.junit.jupiter:junit-jupiter-engine:5.3.2")
 }
 
 configure<GitReleaseExtension> {
@@ -40,4 +41,11 @@ configure<GitReleaseExtension> {
     artifactId = "embulk-test-helpers"
     repoUri = "git@github.com:kamatama41/maven-repository.git"
     repoDir = file("${System.getProperty("user.home")}/gh-maven-repository")
+}
+
+tasks {
+    named<Test>("test") {
+        // Not to exceed the limit of CircleCI (4GB)
+        maxHeapSize = "3g"
+    }
 }

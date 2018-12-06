@@ -2,9 +2,10 @@ package com.kamatama41.embulk.test
 
 import org.embulk.spi.type.Types.*
 import org.embulk.test.EmbulkPluginTest
+import org.embulk.test.EmbulkTest
 import org.embulk.test.TestOutputPlugin.Matcher.assertRecords
 import org.embulk.test.TestOutputPlugin.Matcher.assertSchema
-import org.junit.Test
+import org.junit.jupiter.api.Test
 
 import org.embulk.test.json
 import org.embulk.test.record
@@ -13,9 +14,11 @@ import org.embulk.test.set
 /**
  * Kotlin version of [TestRenameFilterPlugin]
  */
+@EmbulkTest
 class TestRenameFilterPluginKt : EmbulkPluginTest() {
 
-    @Test fun renameColumn() {
+    @Test
+    fun renameColumn() {
         // Construct filter-config
         val config = config().set(
                 "type" to "rename",
