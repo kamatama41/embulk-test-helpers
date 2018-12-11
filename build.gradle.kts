@@ -45,6 +45,7 @@ configure<GitReleaseExtension> {
 
 tasks {
     named<Test>("test") {
+        useJUnitPlatform()
         // Not to exceed the limit of CircleCI (4GB)
         maxHeapSize = "3g"
     }
