@@ -29,10 +29,10 @@ configure<JavaPluginConvention> {
 }
 
 dependencies {
-    compile(kotlin("stdlib"))
-    compile("org.embulk:embulk-standards:0.9.11")
-    compile("org.embulk:embulk-test:0.9.11")
-    compile("org.junit.jupiter:junit-jupiter-api:5.3.2")
+    implementation(kotlin("stdlib"))
+    implementation("org.embulk:embulk-standards:0.9.15")
+    implementation("org.embulk:embulk-test:0.9.15")
+    implementation("org.junit.jupiter:junit-jupiter-api:5.3.2")
     testRuntime("org.junit.jupiter:junit-jupiter-engine:5.3.2")
 }
 
@@ -45,6 +45,7 @@ configure<GitReleaseExtension> {
 
 tasks {
     named<Test>("test") {
+        useJUnitPlatform()
         // Not to exceed the limit of CircleCI (4GB)
         maxHeapSize = "3g"
     }
