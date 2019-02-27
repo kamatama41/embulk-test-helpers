@@ -20,12 +20,42 @@ abstract class EmbulkPluginTest {
     }
 
     @JvmOverloads
-    protected fun resume(inConfig: ConfigSource, resumeState: ResumeState? = null): EmbulkEmbed.ResumableResult {
+    protected fun runOutput(
+            inConfig: ConfigSource,
+            outConfig: ConfigSource,
+            confDiff: ConfigDiff? = null,
+            minOutputTasks: Int = 1
+    ): TestingEmbulk.RunResult {
+        return embulk.RunConfig()
+                .inConfig(inConfig)
+                .configDiff(confDiff)
+                .execConfig(config().set("min_output_tasks", minOutputTasks))
+                .outConfig(outConfig)
+                .run()
+    }
+
+    @JvmOverloads
+    protected fun resumeInput(inConfig: ConfigSource, resumeState: ResumeState? = null): EmbulkEmbed.ResumableResult {
         return embulk.RunConfig()
                 .inConfig(inConfig)
                 .resumeState(resumeState)
                 .execConfig(config().set("min_output_tasks", 1))
                 .outConfig(config().set("type", "test"))
+                .resume()
+    }
+
+    @JvmOverloads
+    protected fun resumeOutput(
+            inConfig: ConfigSource,
+            outConfig: ConfigSource,
+            resumeState: ResumeState? = null,
+            minOutputTasks: Int = 1
+    ): EmbulkEmbed.ResumableResult {
+        return embulk.RunConfig()
+                .inConfig(inConfig)
+                .resumeState(resumeState)
+                .execConfig(config().set("min_output_tasks", minOutputTasks))
+                .outConfig(outConfig)
                 .resume()
     }
 
