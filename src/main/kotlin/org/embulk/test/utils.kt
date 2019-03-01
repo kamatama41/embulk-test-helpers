@@ -2,6 +2,8 @@
 
 package org.embulk.test
 
+import com.fasterxml.jackson.annotation.JsonCreator
+import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.embulk.EmbulkEmbed
 import org.embulk.config.ConfigSource
@@ -36,4 +38,4 @@ fun configFromString(yaml: String): ConfigSource = EmbulkEmbed.newSystemConfigLo
 
 fun configFromResource(name: String): ConfigSource = configFromString(EmbulkTests.readResource(name))
 
-data class Record internal constructor(private val values: List<Any?>)
+data class Record @JsonCreator internal constructor(@JsonProperty("values") val values: List<Any?>)

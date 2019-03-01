@@ -2,7 +2,7 @@ package com.kamatama41.embulk.test
 
 import org.embulk.test.*
 
-import org.embulk.test.TestOutputPlugin.Matcher.assertRecords
+import org.embulk.test.LocalObjectOutputPlugin.Matcher.assertRecords
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test

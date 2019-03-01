@@ -16,7 +16,7 @@ import java.nio.file.Paths;
 import static org.embulk.test.Utils.configFromResource;
 import static org.embulk.test.Utils.record;
 import static org.embulk.test.Utils.timestamp;
-import static org.embulk.test.TestOutputPlugin.assertRecords;
+import static org.embulk.test.LocalObjectOutputPlugin.assertRecords;
 
 public class TestLocalFileInputPlugin {
     @Nested

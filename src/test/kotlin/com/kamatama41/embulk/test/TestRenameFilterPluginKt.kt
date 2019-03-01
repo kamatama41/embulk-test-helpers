@@ -3,8 +3,8 @@ package com.kamatama41.embulk.test
 import org.embulk.spi.type.Types.*
 import org.embulk.test.EmbulkPluginTest
 import org.embulk.test.EmbulkTest
-import org.embulk.test.TestOutputPlugin.Matcher.assertRecords
-import org.embulk.test.TestOutputPlugin.Matcher.assertSchema
+import org.embulk.test.LocalObjectOutputPlugin.Matcher.assertRecords
+import org.embulk.test.LocalObjectOutputPlugin.Matcher.assertSchema
 import org.junit.jupiter.api.Test
 
 import org.embulk.test.json

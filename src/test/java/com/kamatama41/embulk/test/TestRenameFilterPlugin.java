@@ -5,8 +5,8 @@ import org.embulk.test.EmbulkPluginTest;
 import org.embulk.test.EmbulkTest;
 import org.junit.jupiter.api.Test;
 
-import static org.embulk.test.TestOutputPlugin.assertRecords;
-import static org.embulk.test.TestOutputPlugin.assertSchema;
+import static org.embulk.test.LocalObjectOutputPlugin.assertRecords;
+import static org.embulk.test.LocalObjectOutputPlugin.assertSchema;
 import static org.embulk.test.Utils.column;
 import static org.embulk.spi.type.Types.*;
 import static org.embulk.test.Utils.json;
