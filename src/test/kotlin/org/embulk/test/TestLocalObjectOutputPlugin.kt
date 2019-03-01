@@ -1,13 +1,12 @@
 package org.embulk.test
 
-import org.embulk.test.TestOutputPlugin.Matcher.assertRecords
+import org.embulk.test.LocalObjectOutputPlugin.Matcher.assertRecords
 import org.junit.jupiter.api.Test
 
 @EmbulkTest
-internal class TestTestOutputPlugin: EmbulkPluginTest() {
-    @Test
-    fun runByDefault() {
-        val inConfig = configFromResource("yaml/test_output_input.yml")
+internal class TestLocalObjectOutputPlugin: EmbulkPluginTest() {
+    @Test fun runByDefault() {
+        val inConfig = configFromResource("yaml/local_object_output_input.yml")
         val outConfig = outConfigBase()
         // Run Embulk
         runOutput(inConfig, outConfig)
@@ -20,9 +19,8 @@ internal class TestTestOutputPlugin: EmbulkPluginTest() {
         )
     }
 
-    @Test
-    fun runWithIncrementalColumn() {
-        val inConfig = configFromResource("yaml/test_output_input.yml")
+    @Test fun runWithIncrementalColumn() {
+        val inConfig = configFromResource("yaml/local_object_output_input.yml")
         val outConfig = outConfigBase()
                 .set("incremental", true)
                 .set("incremental_column", "id")
@@ -49,11 +47,11 @@ internal class TestTestOutputPlugin: EmbulkPluginTest() {
         // Change incremental column to Double
         outConfig.set("incremental_column", "height")
         // Run Embulk with ConfigDiff
-        result = runOutput(inConfig, outConfig, result.configDiff)
+        runOutput(inConfig, outConfig, result.configDiff)
 
         // 2 records (height > 150.1) should be read
         assertRecords(records[0], records[2])
     }
 
-    private fun outConfigBase() = config().set("type", "test")
+    private fun outConfigBase() = config().set("type", "local_object")
 }

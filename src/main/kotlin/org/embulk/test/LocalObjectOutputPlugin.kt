@@ -21,7 +21,7 @@ import java.util.Optional
 import kotlin.Comparator
 
 
-class TestOutputPlugin : OutputPlugin {
+class LocalObjectOutputPlugin : OutputPlugin {
 
     interface PluginTask : Task {
         @get:Config("incremental")
