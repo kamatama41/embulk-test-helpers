@@ -15,7 +15,7 @@ abstract class EmbulkPluginTest {
                 .inConfig(inConfig)
                 .configDiff(confDiff)
                 .execConfig(config().set("min_output_tasks", 1))
-                .outConfig(config().set("type", "test"))
+                .outConfig(config().set("type", "local_object"))
                 .run()
     }
 
@@ -40,7 +40,7 @@ abstract class EmbulkPluginTest {
                 .inConfig(inConfig)
                 .resumeState(resumeState)
                 .execConfig(config().set("min_output_tasks", 1))
-                .outConfig(config().set("type", "test"))
+                .outConfig(config().set("type", "local_object"))
                 .resume()
     }
 
@@ -64,7 +64,7 @@ abstract class EmbulkPluginTest {
                 .inConfig(configFromResource(inConfigPath))
                 .filterConfig(filterConfig)
                 .execConfig(config().set("min_output_tasks", 1))
-                .outConfig(config().set("type", "test"))
+                .outConfig(config().set("type", "local_object"))
                 .run()
     }
 

@@ -3,7 +3,7 @@ package com.kamatama41.embulk.test
 import org.embulk.test.EmbulkPluginTest
 import org.embulk.test.EmbulkTest
 
-import org.embulk.test.TestOutputPlugin.Matcher.assertRecords
+import org.embulk.test.LocalObjectOutputPlugin.Matcher.assertRecords
 import org.embulk.test.record
 import org.junit.jupiter.api.Test
 

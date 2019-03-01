@@ -1,9 +1,7 @@
 package org.embulk.test
 
 import org.embulk.spi.Column
-import org.embulk.spi.PageReader
 import org.embulk.spi.Schema
-import org.embulk.spi.util.Pages
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.`is`
 
@@ -14,14 +12,8 @@ internal class Recorder {
     private val records = mutableListOf<Record>()
     private var schema: Schema? = null
 
-    @Synchronized fun addRecord(reader: PageReader) {
-        val values: MutableList<Any?> = arrayListOf()
-        reader.schema.visitColumns(object : Pages.ObjectColumnVisitor(reader) {
-            override fun visit(column: Column, value: Any?) {
-                values.add(value)
-            }
-        })
-        this.records.add(Record(values))
+    @Synchronized fun addRecord(record: Record) {
+        this.records.add(record)
     }
 
     @Synchronized fun setSchema(schema: Schema) {
