@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.embulk.EmbulkEmbed
+import org.embulk.config.ConfigDiff
 import org.embulk.config.ConfigSource
 import org.embulk.spi.Column
 import org.embulk.spi.json.JsonParser
@@ -37,5 +38,7 @@ fun json(vararg pairs: Pair<String, Any?>): Value = json(mapper.writeValueAsStri
 fun configFromString(yaml: String): ConfigSource = EmbulkEmbed.newSystemConfigLoader().fromYamlString(yaml)
 
 fun configFromResource(name: String): ConfigSource = configFromString(EmbulkTests.readResource(name))
+
+fun configDiffFromString(yaml: String): ConfigDiff = configFromString(yaml).loadConfig(ConfigDiff::class.java)
 
 data class Record @JsonCreator internal constructor(@JsonProperty("values") val values: List<Any?>)
