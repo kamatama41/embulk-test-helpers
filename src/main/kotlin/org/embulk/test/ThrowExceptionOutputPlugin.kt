@@ -236,7 +236,7 @@ class ThrowExceptionOutputPlugin : OutputPlugin {
             } catch (e: InterruptedException) {
                 throw RuntimeException(e)
             } catch (e: ExecutionException) {
-                throw RuntimeException(e)
+                throw RuntimeException(e.cause)
             }
         }
     }
