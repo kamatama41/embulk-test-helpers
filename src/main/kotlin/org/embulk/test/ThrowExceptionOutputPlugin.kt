@@ -63,9 +63,13 @@ class ThrowExceptionOutputPlugin : OutputPlugin {
         }
 
         val controlTask = RunControlTask(task, control, executorService).apply { runAsynchronously() }
-        val originalDiff = buildPluginDelegate(task, Exec.session())
-                .transaction(schema, taskCount, controlTask)
-                .get()
+        val originalDiff = try {
+            buildPluginDelegate(task, Exec.session())
+                    .transaction(schema, taskCount, controlTask)
+                    .get()
+        } catch (e: ExecutionException) {
+            throw e.cause!!
+        }
 
         if (task.thrownOn == ThrownOn.AFTER_TRANSACTION) {
             throw RuntimeException("Failed on after transaction.")
@@ -82,9 +86,13 @@ class ThrowExceptionOutputPlugin : OutputPlugin {
         }
 
         val controlTask = RunControlTask(task, control, executorService).apply { runAsynchronously() }
-        val originalDiff = buildPluginDelegate(task, Exec.session())
-                .resume(schema, taskCount, controlTask)
-                .get()
+        val originalDiff = try {
+            buildPluginDelegate(task, Exec.session())
+                    .resume(schema, taskCount, controlTask)
+                    .get()
+        } catch (e: ExecutionException) {
+            throw e.cause!!
+        }
 
         if (task.thrownOn == ThrownOn.AFTER_RESUME) {
             throw RuntimeException("Failed on after resume.")
