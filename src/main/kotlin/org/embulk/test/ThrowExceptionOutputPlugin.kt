@@ -234,6 +234,7 @@ class ThrowExceptionOutputPlugin : OutputPlugin {
             try {
                 return controlTask.waitAndGetResult()
             } catch (e: InterruptedException) {
+                Thread.currentThread().interrupt()
                 throw RuntimeException(e)
             } catch (e: ExecutionException) {
                 throw RuntimeException(e.cause)
