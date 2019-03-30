@@ -23,13 +23,14 @@ abstract class EmbulkPluginTest {
     protected fun runExec(
             inConfig: ConfigSource,
             execConfig: ConfigSource,
+            outConfig: ConfigSource = config().set("type", "local_object"),
             confDiff: ConfigDiff? = null
     ): TestingEmbulk.RunResult {
         return embulk.RunConfig()
                 .inConfig(inConfig)
                 .configDiff(confDiff)
                 .execConfig(execConfig)
-                .outConfig(config().set("type", "local_object"))
+                .outConfig(outConfig)
                 .run()
     }
 
@@ -62,13 +63,14 @@ abstract class EmbulkPluginTest {
     protected fun resumeExec(
             inConfig: ConfigSource,
             execConfig: ConfigSource,
+            outConfig: ConfigSource = config().set("type", "local_object"),
             resumeState: ResumeState? = null
     ): EmbulkEmbed.ResumableResult {
         return embulk.RunConfig()
                 .inConfig(inConfig)
                 .resumeState(resumeState)
                 .execConfig(execConfig)
-                .outConfig(config().set("type", "local_object"))
+                .outConfig(outConfig)
                 .resume()
     }
 
