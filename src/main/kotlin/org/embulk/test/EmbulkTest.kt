@@ -6,4 +6,4 @@ import kotlin.reflect.KClass
 @ExtendWith(EmbulkTestExtension::class)
 @Target(AnnotationTarget.CLASS)
 @Retention(AnnotationRetention.RUNTIME)
-annotation class EmbulkTest(val value: Array<KClass<*>> = [])
+annotation class EmbulkTest(val value: Array<KClass<*>> = [], val name: String = "")

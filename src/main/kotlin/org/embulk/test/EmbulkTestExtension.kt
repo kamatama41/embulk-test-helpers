@@ -6,15 +6,13 @@ import org.junit.jupiter.api.extension.TestInstancePostProcessor
 import org.junit.platform.commons.support.AnnotationSupport.findAnnotation
 import org.junit.platform.commons.support.AnnotationSupport.findPublicAnnotatedFields
 import java.lang.AssertionError
-import kotlin.reflect.KClass
 
 class EmbulkTestExtension : TestInstancePostProcessor, AfterEachCallback {
 
     override fun postProcessTestInstance(testInstance: Any, context: ExtensionContext) {
-        val pluginClasses = findAnnotation(context.testClass, EmbulkTest::class.java)
+        val annotation = findAnnotation(context.testClass, EmbulkTest::class.java)
                 .orElseThrow { AssertionError("@EmbulkTest not found") }
-                .value
-        val embulk = createNewEmbulk(pluginClasses)
+        val embulk = createNewEmbulk(annotation)
         val embulkFields = findPublicAnnotatedFields(testInstance.javaClass, ExtendedTestingEmbulk::class.java, Embulk::class.java)
         embulkFields.forEach {
             it.isAccessible = true
@@ -34,10 +32,16 @@ class EmbulkTestExtension : TestInstancePostProcessor, AfterEachCallback {
         }
     }
 
-    private fun createNewEmbulk(pluginClasses: Array<KClass<*>>): ExtendedTestingEmbulk {
-        return ExtendedTestingEmbulk.builder()
-                .registerPlugins(*pluginClasses)
-                .build() as ExtendedTestingEmbulk
+    private fun createNewEmbulk(annotation: EmbulkTest): ExtendedTestingEmbulk {
+        val builder = ExtendedTestingEmbulk.builder()
+        annotation.value.forEach {
+            if (annotation.name.isEmpty()) {
+                builder.registerPlugin(impl = it)
+            } else {
+                builder.registerPlugin(impl = it, name = annotation.name)
+            }
+        }
+        return builder.build() as ExtendedTestingEmbulk
     }
 
     companion object {
