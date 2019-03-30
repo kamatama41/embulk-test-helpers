@@ -6,6 +6,7 @@ import org.embulk.config.ConfigSource
 import org.embulk.exec.ResumeState
 import org.embulk.spi.DecoderPlugin
 import org.embulk.spi.EncoderPlugin
+import org.embulk.spi.ExecutorPlugin
 import org.embulk.spi.FileInputPlugin
 import org.embulk.spi.FileOutputPlugin
 import org.embulk.spi.FilterPlugin
@@ -72,7 +73,8 @@ class ExtendedTestingEmbulk internal constructor(builder: ExtendedTestingEmbulk.
                     ParserPlugin::class.java to ParserPlugin::class.java,
                     FormatterPlugin::class.java to FormatterPlugin::class.java,
                     DecoderPlugin::class.java to DecoderPlugin::class.java,
-                    EncoderPlugin::class.java to EncoderPlugin::class.java
+                    EncoderPlugin::class.java to EncoderPlugin::class.java,
+                    ExecutorPlugin::class.java to ExecutorPlugin::class.java
             )
         }
     }
