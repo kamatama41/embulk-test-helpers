@@ -20,6 +20,20 @@ abstract class EmbulkPluginTest {
     }
 
     @JvmOverloads
+    protected fun runExec(
+            inConfig: ConfigSource,
+            execConfig: ConfigSource,
+            confDiff: ConfigDiff? = null
+    ): TestingEmbulk.RunResult {
+        return embulk.RunConfig()
+                .inConfig(inConfig)
+                .configDiff(confDiff)
+                .execConfig(execConfig)
+                .outConfig(config().set("type", "local_object"))
+                .run()
+    }
+
+    @JvmOverloads
     protected fun runOutput(
             inConfig: ConfigSource,
             outConfig: ConfigSource,
@@ -40,6 +54,20 @@ abstract class EmbulkPluginTest {
                 .inConfig(inConfig)
                 .resumeState(resumeState)
                 .execConfig(config().set("min_output_tasks", 1))
+                .outConfig(config().set("type", "local_object"))
+                .resume()
+    }
+
+    @JvmOverloads
+    protected fun resumeExec(
+            inConfig: ConfigSource,
+            execConfig: ConfigSource,
+            resumeState: ResumeState? = null
+    ): EmbulkEmbed.ResumableResult {
+        return embulk.RunConfig()
+                .inConfig(inConfig)
+                .resumeState(resumeState)
+                .execConfig(execConfig)
                 .outConfig(config().set("type", "local_object"))
                 .resume()
     }
