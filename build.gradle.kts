@@ -1,18 +1,9 @@
 import com.github.kamatama41.gradle.gitrelease.GitReleaseExtension
 
-buildscript {
-    repositories {
-        jcenter()
-        maven { setUrl("http://kamatama41.github.com/maven-repository/repository") }
-    }
-    dependencies {
-        classpath("com.github.kamatama41:gradle-git-release-plugin:0.2.0")
-    }
-}
-
 plugins {
     idea
     kotlin("jvm") version "1.3.21"
+    id("com.github.kamatama41.git-release") version "0.3.0"
 }
 
 apply {
