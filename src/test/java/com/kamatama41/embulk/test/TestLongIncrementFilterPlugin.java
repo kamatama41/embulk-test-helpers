@@ -13,14 +13,11 @@ public class TestLongIncrementFilterPlugin extends EmbulkPluginTest {
 
     @Test
     public void incrementsJustLongColumns() {
-        // Specify input data
-        final String inConfigPath = "yaml/long_increment_input.yml";
-
         // Construct filter-config
         ConfigSource config = config().set("type", "long_increment");
 
         // Run Embulk
-        runFilter(config, inConfigPath);
+        runConfig("yaml/long_increment_input.yml").filterConfig(config).run();
 
         // Check read records
         assertRecords(

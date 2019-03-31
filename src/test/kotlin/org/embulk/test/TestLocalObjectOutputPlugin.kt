@@ -9,7 +9,7 @@ internal class TestLocalObjectOutputPlugin: EmbulkPluginTest() {
         val inConfig = configFromResource("yaml/local_object_output_input.yml")
         val outConfig = outConfigBase()
         // Run Embulk
-        runOutput(inConfig, outConfig)
+        runConfig(inConfig).outConfig(outConfig).run()
 
         // Check read records
         assertRecords(
@@ -31,7 +31,7 @@ internal class TestLocalObjectOutputPlugin: EmbulkPluginTest() {
         )
 
         // Run Embulk
-        var result = runOutput(inConfig, outConfig)
+        var result = runConfig(inConfig).outConfig(outConfig).run()
 
         // 3 records should be read
         assertRecords(*records)
@@ -39,7 +39,7 @@ internal class TestLocalObjectOutputPlugin: EmbulkPluginTest() {
         // Change incremental column to String
         outConfig.set("incremental_column", "username")
         // Run Embulk with ConfigDiff
-        result = runOutput(inConfig, outConfig, result.configDiff)
+        result = runConfig(inConfig).outConfig(outConfig).configDiff(result.configDiff).run()
 
         // 2 records (username > "user1") should be read
         assertRecords(records[0], records[1])
@@ -47,7 +47,7 @@ internal class TestLocalObjectOutputPlugin: EmbulkPluginTest() {
         // Change incremental column to Double
         outConfig.set("incremental_column", "height")
         // Run Embulk with ConfigDiff
-        runOutput(inConfig, outConfig, result.configDiff)
+        runConfig(inConfig).outConfig(outConfig).configDiff(result.configDiff).run()
 
         // 2 records (height > 150.1) should be read
         assertRecords(records[0], records[2])
