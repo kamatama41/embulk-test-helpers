@@ -2,13 +2,27 @@ package com.kamatama41.embulk.test;
 
 import org.embulk.config.ConfigSource;
 import org.embulk.config.TaskReport;
+import org.embulk.exec.ForSystemConfig;
 import org.embulk.spi.Exec;
 import org.embulk.spi.ExecutorPlugin;
 import org.embulk.spi.ProcessState;
 import org.embulk.spi.Schema;
 import org.embulk.spi.util.Executors;
 
+import javax.inject.Inject;
+
 public class SimpleExecutorPlugin implements ExecutorPlugin {
+    private final ConfigSource systemConfig;
+
+    @Inject
+    public SimpleExecutorPlugin(@ForSystemConfig ConfigSource systemConfig) {
+        this.systemConfig = systemConfig;
+    }
+
+    public ConfigSource getSystemConfig() {
+        return systemConfig;
+    }
+
     @Override
     public void transaction(ConfigSource config, Schema outputSchema, int inputTaskCount, Control control) {
         control.transaction(outputSchema, inputTaskCount, (task, state) -> {

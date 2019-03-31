@@ -7,7 +7,7 @@ import org.embulk.exec.ResumeState
 
 abstract class EmbulkPluginTest {
     @Embulk
-    lateinit var embulk: ExtendedTestingEmbulk
+    internal lateinit var embulk: ExtendedTestingEmbulk
 
     @JvmOverloads
     protected fun runInput(inConfig: ConfigSource, confDiff: ConfigDiff? = null): TestingEmbulk.RunResult {
@@ -100,5 +100,13 @@ abstract class EmbulkPluginTest {
 
     protected fun config(): ConfigSource {
         return embulk.newConfig()
+    }
+
+    protected fun <T> getInstance(type: Class<T>): T {
+        return embulk.superEmbed.injector.getInstance(type)
+    }
+
+    protected fun setSystemConfig(systemConfig: ConfigSource) {
+        embulk.setSystemConfig(systemConfig)
     }
 }
