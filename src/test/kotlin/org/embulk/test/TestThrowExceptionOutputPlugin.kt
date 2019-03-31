@@ -36,7 +36,7 @@ internal class TestThrowExceptionOutputPlugin: EmbulkPluginTest() {
         """.trimIndent())
 
         try {
-            runOutput(inConfig, outConfig, configDiff)
+            runConfig(inConfig).outConfig(outConfig).configDiff(configDiff).run()
             fail<Void>("No exception")
         } catch (e: RuntimeException) {
             assertEquals("Failed on after transaction.", e.cause!!.message)

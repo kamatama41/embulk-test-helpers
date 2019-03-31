@@ -18,7 +18,7 @@ class TestLocalFileInputPluginKt {
         @Test
         fun readFile() {
             // Run Embulk
-            runInput(inConfig = configFromResource("yaml/file_input.yml"))
+            runConfig("yaml/file_input.yml").run()
 
             // Check read records
             assertRecords(
@@ -38,8 +38,8 @@ class TestLocalFileInputPluginKt {
 
         @Test fun testConfDiff() {
             // Run Embulk
-            val inConfig = configFromResource("yaml/file_input_confdiff.yml")
-            val runResult = runInput(inConfig)
+            val inConfigPath = "yaml/file_input_confdiff.yml"
+            val runResult = runConfig(inConfigPath).run()
 
             // Will read only file_input.csv
             assertRecords(
@@ -51,7 +51,7 @@ class TestLocalFileInputPluginKt {
 
             // Run again with conf diff and new file
             createFile()
-            runInput(inConfig, runResult.configDiff)
+            runConfig(inConfigPath).configDiff(runResult.configDiff).run()
 
             // Will read only new file
             assertRecords(

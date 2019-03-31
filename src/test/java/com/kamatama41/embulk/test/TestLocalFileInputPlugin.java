@@ -1,6 +1,5 @@
 package com.kamatama41.embulk.test;
 
-import org.embulk.config.ConfigSource;
 import org.embulk.test.EmbulkPluginTest;
 import org.embulk.test.EmbulkTest;
 import org.embulk.test.TestingEmbulk;
@@ -13,7 +12,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import static org.embulk.test.Utils.configFromResource;
 import static org.embulk.test.Utils.record;
 import static org.embulk.test.Utils.timestamp;
 import static org.embulk.test.LocalObjectOutputPlugin.assertRecords;
@@ -24,11 +22,8 @@ public class TestLocalFileInputPlugin {
     public class DefaultCase extends EmbulkPluginTest {
         @Test
         public void readFile() {
-            // Read in-config from resources
-            ConfigSource config = configFromResource("yaml/file_input.yml");
-
             // Run Embulk
-            runInput(config);
+            runConfig("yaml/file_input.yml").run();
 
             // Check read records
             assertRecords(
@@ -53,11 +48,9 @@ public class TestLocalFileInputPlugin {
 
         @Test
         public void testConfDiff() throws IOException {
-            // Read in-config from resources
-            ConfigSource config = configFromResource("yaml/file_input_confdiff.yml");
-
             // Run Embulk
-            TestingEmbulk.RunResult runResult = runInput(config);
+            String inConfigPath = "yaml/file_input_confdiff.yml";
+            TestingEmbulk.RunResult runResult = runConfig(inConfigPath).run();
 
             // Will read only file_input.csv
             assertRecords(
@@ -69,7 +62,7 @@ public class TestLocalFileInputPlugin {
 
             // Run again with conf diff and new file
             createFile();
-            runInput(config, runResult.getConfigDiff());
+            runConfig(inConfigPath).configDiff(runResult.getConfigDiff()).run();
 
             // Will read only new file
             assertRecords(

@@ -19,7 +19,7 @@ class TestLongIncrementFilterPluginKt : EmbulkPluginTest() {
         val config = config().set("type", "long_increment")
 
         // Run Embulk
-        runFilter(config, inConfigPath = "yaml/long_increment_input.yml")
+        runConfig("yaml/long_increment_input.yml").filterConfig(config).run()
 
         // Check read records
         assertRecords(

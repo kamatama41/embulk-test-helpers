@@ -3,7 +3,6 @@ package com.kamatama41.embulk.test
 import org.embulk.test.EmbulkPluginTest
 import org.embulk.test.EmbulkTest
 import org.embulk.test.LocalObjectOutputPlugin.Matcher.assertRecords
-import org.embulk.test.configFromResource
 import org.embulk.test.record
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
@@ -16,10 +15,9 @@ class TestSimpleExecutorPluginKt : EmbulkPluginTest() {
     @Test
     fun runWithSimpleExecutor() {
         // Read in-config from resources
-        val inConfig = configFromResource("yaml/simple_executor_input.yml")
         val execConfig = config().set("type", "simple_exec")
 
-        runExec(inConfig, execConfig)
+        runConfig("yaml/simple_executor_input.yml").execConfig(execConfig).run()
 
         // Check read records
         assertRecords(

@@ -17,9 +17,6 @@ public class TestRenameFilterPlugin extends EmbulkPluginTest {
 
     @Test
     public void renameColumn() {
-        // Specify input data
-        final String inConfigPath = "yaml/filter_input.yml";
-
         // Construct filter-config
         ConfigSource config = config()
                 .set("type", "rename")
@@ -28,7 +25,7 @@ public class TestRenameFilterPlugin extends EmbulkPluginTest {
                 );
 
         // Run Embulk
-        runFilter(config, inConfigPath);
+        runConfig("yaml/filter_input.yml").filterConfig(config).run();
 
         // Check schema definition
         assertSchema(
@@ -45,15 +42,13 @@ public class TestRenameFilterPlugin extends EmbulkPluginTest {
 
     @Test
     public void renameJsonColumn() {
-        final String inConfigPath = "yaml/filter_json_input.yml";
-
         ConfigSource config = config()
                 .set("type", "rename")
                 .set("columns", config()
                         .set("record", "user_info")
                 );
 
-        runFilter(config, inConfigPath);
+        runConfig("yaml/filter_json_input.yml").filterConfig(config).run();
 
         assertSchema(
                 column("user_info", JSON)

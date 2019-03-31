@@ -98,7 +98,7 @@ class ExtendedTestingEmbulk internal constructor(builder: ExtendedTestingEmbulk.
         }
     }
 
-    internal inner class RunConfig {
+    inner class RunConfig {
         private var inConfig: ConfigSource? = null
         private val filterConfigs = mutableListOf<ConfigSource>()
         private var execConfig: ConfigSource? = null
