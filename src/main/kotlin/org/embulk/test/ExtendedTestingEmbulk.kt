@@ -1,5 +1,6 @@
 package org.embulk.test
 
+import com.google.inject.Module
 import org.embulk.EmbulkEmbed
 import org.embulk.config.ConfigDiff
 import org.embulk.config.ConfigSource
@@ -16,7 +17,8 @@ import org.embulk.spi.OutputPlugin
 import org.embulk.spi.ParserPlugin
 
 class ExtendedTestingEmbulk internal constructor(builder: ExtendedTestingEmbulk.Builder) : TestingEmbulk(builder) {
-    private val superEmbed: EmbulkEmbed
+    internal var superEmbed: EmbulkEmbed
+    private var systemConfig: ConfigSource? = null
 
     init {
         this.superEmbed = extractSuperField("embed")
@@ -27,6 +29,23 @@ class ExtendedTestingEmbulk internal constructor(builder: ExtendedTestingEmbulk.
         val field = TestingEmbulk::class.java.getDeclaredField(fieldName)
         field.isAccessible = true
         return field.get(this) as T
+    }
+
+    fun setSystemConfig(systemConfig: ConfigSource) {
+        this.systemConfig = systemConfig
+        reset()
+    }
+
+    override fun reset() {
+        super.reset()
+
+        val bootstrap = EmbulkEmbed.Bootstrap()
+                .addModules(extractSuperField("modules") as List<Module>)
+                .overrideModules(TestingBulkLoader.override())
+        if (systemConfig != null) {
+            bootstrap.setSystemConfig(systemConfig)
+        }
+        this.superEmbed = bootstrap.initializeCloseable()
     }
 
     class Builder : TestingEmbulk.Builder() {

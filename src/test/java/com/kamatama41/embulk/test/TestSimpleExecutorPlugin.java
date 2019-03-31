@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import static org.embulk.test.LocalObjectOutputPlugin.assertRecords;
 import static org.embulk.test.Utils.configFromResource;
 import static org.embulk.test.Utils.record;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @EmbulkTest(value = SimpleExecutorPlugin.class, name = "simple_exec")
 class TestSimpleExecutorPlugin extends EmbulkPluginTest {
@@ -24,5 +25,15 @@ class TestSimpleExecutorPlugin extends EmbulkPluginTest {
                 record("user1", 20),
                 record("user2", 21)
         );
+    }
+
+    @Test
+    void getInjectedSystemConfig() {
+        setSystemConfig(config().set("foo", "bar"));
+
+        SimpleExecutorPlugin plugin = getInstance(SimpleExecutorPlugin.class);
+
+        ConfigSource injectedConfig = plugin.getSystemConfig();
+        assertEquals(injectedConfig.get(String.class, "foo"), "bar");
     }
 }
