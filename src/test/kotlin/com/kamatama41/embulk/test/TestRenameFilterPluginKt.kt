@@ -26,7 +26,7 @@ class TestRenameFilterPluginKt : EmbulkPluginTest() {
         )
 
         // Run Embulk
-        runFilter(config, inConfigPath = "yaml/filter_input.yml")
+        runConfig("yaml/filter_input.yml").filterConfig(config).run()
 
         // Check schema definition
         assertSchema(
@@ -47,7 +47,7 @@ class TestRenameFilterPluginKt : EmbulkPluginTest() {
                 "columns" to config().set("record" to "user_info")
         )
 
-        runFilter(config, inConfigPath = "yaml/filter_json_input.yml")
+        runConfig("yaml/filter_json_input.yml").filterConfig(config).run()
 
         assertSchema("user_info" to JSON)
 
